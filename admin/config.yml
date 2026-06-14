@@ -53,13 +53,18 @@ collections:
         name: "facilities"
         file: "data/facilities.json"
         fields:
-          - label: "Equipment Items"
-            name: "items"
+          - label: "Equipment Categories"
+            name: "categories"
             widget: "list"
             fields:
-              - {label: "Machine Name", name: "name", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Photo", name: "photo", widget: "image"}
+              - {label: "Category Heading (e.g., Characterization)", name: "heading", widget: "string"}
+              - label: "Equipment Items in this Category"
+                name: "items"
+                widget: "list"
+                fields:
+                  - {label: "Machine Name", name: "name", widget: "string"}
+                  - {label: "Description", name: "description", widget: "text"}
+                  - {label: "Photo", name: "photo", widget: "image"}
               
       - label: "Publications List"
         name: "publications"
