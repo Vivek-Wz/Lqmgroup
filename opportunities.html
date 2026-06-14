@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opportunities - Kamal Kumar Paul Research Group</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">LQM Group</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="facilities.html">Facilities</a></li>
+                <li><a href="opportunities.html" class="active">Opportunities</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" style="margin-top: 40px; min-height: 60vh;">
+        <h2 class="section-header">Join the Lab</h2>
+        <p style="text-align: center; margin-bottom: 40px; color: #555;">We are always looking for motivated researchers to join our team. See our current openings below.</p>
+        
+        <div id="dynamic-opportunities"></div>
+        
+    </div>
+
+    <footer style="margin-top: 40px;">
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dr. Kamal Kumar Paul Research Group. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        fetch('data/opportunities.json')
+            .then(response => {
+                if (!response.ok) throw new Error("Opportunities data not found");
+                return response.json();
+            })
+            .then(data => {
+                const oppContainer = document.getElementById('dynamic-opportunities');
+                let allOppHTML = "";
+
+                // Loop through every open position in the CMS
+                if (data.positions) {
+                    data.positions.forEach(pos => {
+                        // Determine badge color based on status
+                        const badgeColor = pos.status === "Open" ? "green" : "red";
+                        
+                        // Build a wide card for each job posting
+                        allOppHTML += `
+                            <div class="card" style="margin-bottom: 20px; padding: 20px; text-align: left;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+                                    <h3 style="margin: 0; color: #003366;">${pos.title}</h3>
+                                    <span style="background-color: ${badgeColor}; color: white; padding: 3px 10px; border-radius: 15px; font-size: 0.85rem; font-weight: bold;">${pos.status}</span>
+                                </div>
+                                <p><strong>Description:</strong> ${pos.description}</p>
+                                <p><strong>Requirements:</strong> ${pos.requirements}</p>
+                                <p style="margin-top: 15px; font-style: italic;"><strong>How to Apply:</strong> ${pos.apply}</p>
+                            </div>
+                        `;
+                    });
+                }
+
+                // Inject the job postings into the page
+                oppContainer.innerHTML = allOppHTML;
+            })
+            .catch(error => console.log("Opportunities data hasn't been created in the CMS yet.", error));
+    </script>
+
+</body>
+</html>
