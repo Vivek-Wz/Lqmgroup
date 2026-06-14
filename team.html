@@ -38,9 +38,15 @@
     </section>
 
     <div class="container">
-        <h2 class="section-header" id="team">Research Group</h2>
         
-        <div class="grid-container" id="dynamic-team"></div>
+        <h2 class="section-header">Postdoctoral Researchers</h2>
+        <div class="grid-container" id="team-postdocs"></div>
+
+        <h2 class="section-header">PhD Students</h2>
+        <div class="grid-container" id="team-phds"></div>
+
+        <h2 class="section-header">Master Students</h2>
+        <div class="grid-container" id="team-masters"></div>
         
     </div>
 
@@ -54,26 +60,38 @@
                 return response.json();
             })
             .then(data => {
-                const teamContainer = document.getElementById('dynamic-team');
-                let allMembersHTML = "";
+                // The three "buckets" to hold the sorted HTML
+                let postdocHTML = "";
+                let phdHTML = "";
+                let masterHTML = "";
 
-                // Loop through every team member in the CMS
+                // Loop through every person in the CMS
                 data.members.forEach((member) => {
-                    // Check if a photo was uploaded, otherwise use a blank placeholder
                     const imgPath = member.photo ? member.photo.replace(/^\//, '') : 'placeholder.jpg';
                     
-                    // Build the HTML card for each person
-                    allMembersHTML += `
+                    // Build the standard card for the person
+                    let card = `
                         <div class="card">
                             <img src="${imgPath}" alt="${member.name}" style="width:100%; border-radius: 5px; margin-bottom: 15px;">
                             <h3 style="margin: 0; color: #003366;">${member.name}</h3>
                             <p style="margin-top: 5px; font-weight: bold; color: #555;">${member.role}</p>
                         </div>
                     `;
+
+                    // SORTING LOGIC: Check the dropdown category and add to the right bucket
+                    if (member.category === "Post Doc") {
+                        postdocHTML += card;
+                    } else if (member.category === "PhD Student") {
+                        phdHTML += card;
+                    } else if (member.category === "Master Student") {
+                        masterHTML += card;
+                    }
                 });
 
-                // Inject all the newly built cards into the webpage grid
-                teamContainer.innerHTML = allMembersHTML;
+                // Inject the filled buckets into the matching HTML containers
+                document.getElementById('team-postdocs').innerHTML = postdocHTML;
+                document.getElementById('team-phds').innerHTML = phdHTML;
+                document.getElementById('team-masters').innerHTML = masterHTML;
             })
             .catch(error => console.log("Team data hasn't been created in the CMS yet.", error));
     </script>
