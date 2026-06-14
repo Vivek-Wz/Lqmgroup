@@ -45,7 +45,8 @@ collections:
             widget: "list"
             fields:
               - {label: "Name", name: "name", widget: "string"}
-              - {label: "Role", name: "role", widget: "string"}
+              - {label: "Category", name: "category", widget: "select", options: ["Post Doc", "PhD Student", "Master Student"]}
+              - {label: "Specific Role (Optional)", name: "role", widget: "string"}
               - {label: "Photo", name: "photo", widget: "image"}
       
       - label: "Facilities & Equipment"
