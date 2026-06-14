@@ -23,44 +23,14 @@
     </nav>
 
     <!-- Main Container: Image Slider -->
-    <section class="slider-container" id="home">
+  <section class="slider-container" id="home">
         
-        <!-- Slide 1 -->
-        <div class="slide fade">
-            <!-- Upload an image to GitHub named lab-photo-1.jpg -->
-            <img src="lab-photo-1.jpg.png" alt="Lab Equipment">
-            <div class="slide-text">
-                <h1>Dr. Kamal Kumar Paul Research Group</h1>
-                <p>Institute of Low-Dimensional Quantum Materials | Hubei University of Technology</p>
-            </div>
-        </div>
+        <div id="dynamic-slider"></div>
 
-        <!-- Slide 2 -->
-        <div class="slide fade">
-            <!-- Upload an image to GitHub named lab-photo-2.jpg -->
-            <img src="media/lab-photo-2.jpg" alt="Clean Room">
-            <div class="slide-text">
-                <h1>Advanced Synthesis</h1>
-                <p>Exploring 2D Transition Metal Dichalcogenides</p>
-            </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="slide fade">
-            <!-- Upload an image to GitHub named lab-photo-3.jpg -->
-            <img src="media/lab-photo-3.jpg" alt="Research Meeting">
-            <div class="slide-text">
-                <h1>Next-Generation Photovoltaics</h1>
-                <p>Pushing the limits of Hot Carrier Solar Cells</p>
-            </div>
-        </div>
-
-        <!-- The "Next" and "Previous" Arrows -->
         <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
         <a class="next" onclick="changeSlide(1)">&#10095;</a>
 
     </section>
-
     <!-- Main Content (PI, Team, and Research Areas) -->
     <div class="container">
         
@@ -165,25 +135,67 @@
         </div>
     </footer>
 
-    <script>
-        let slideIndex = 1;
-        showSlides(slideIndex);
+        <script>
+        fetch('data/home.json')
+            .then(response => {
+                if (!response.ok) throw new Error("Slider data not found");
+                return response.json();
+            })
+            .then(data => {
+                const sliderContainer = document.getElementById('dynamic-slider');
+                let allSlidesHTML = "";
 
-        function changeSlide(n) {
-            showSlides(slideIndex += n);
-        }
+                // Loop through every slide you created in the CMS
+                data.slider.forEach((slide) => {
+                    // Check if an image exists, and fix the path if the CMS added a leading slash
+                    const imgPath = slide.image ? slide.image.replace(/^\//, '') : '';
+                    
+                    // Build the HTML for each slide
+                    allSlidesHTML += `
+                        <div class="slide fade">
+                            <img src="${imgPath}" alt="${slide.heading}">
+                            <div class="slide-text">
+                                <h1>${slide.heading}</h1>
+                                <p>${slide.subtext}</p>
+                            </div>
+                        </div>
+                    `;
+                });
 
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("slide");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slides[slideIndex-1].style.display = "block";
-        }
-        
+                // Inject all the newly built slides into the webpage
+                sliderContainer.innerHTML = allSlidesHTML;
+
+                // --- START THE ANIMATION ---
+                // We start the animation only AFTER the slides are built
+                let slideIndex = 1;
+                showSlides(slideIndex);
+
+                // Make the arrows work globally
+                window.changeSlide = function(n) {
+                    showSlides(slideIndex += n);
+                };
+
+                function showSlides(n) {
+                    let i;
+                    let slides = document.getElementsByClassName("slide");
+                    if (n > slides.length) {slideIndex = 1}
+                    if (n < 1) {slideIndex = slides.length}
+                    for (i = 0; i < slides.length; i++) {
+                        slides[i].style.display = "none";
+                    }
+                    if(slides.length > 0) {
+                        slides[slideIndex-1].style.display = "block";
+                    }
+                }
+                
+                // Auto-change image every 5 seconds
+                setInterval(function() {
+                    changeSlide(1);
+                }, 5000); 
+            })
+            .catch(error => console.log("Slider data hasn't been created in the CMS yet.", error));
+    </script>
+       
         // Auto-change image every 5 seconds
         setInterval(function() {
             changeSlide(1);
