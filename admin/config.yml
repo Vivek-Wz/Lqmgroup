@@ -32,7 +32,7 @@ collections:
           - {label: "Email", name: "email", widget: "string"}
           - {label: "Profile Photo", name: "photo", widget: "image"}
 
-  # --- 2. LISTS & GRIDS (Team, Facilities, Pubs) ---
+   # --- 2. LISTS & GRIDS ---
   - name: "lists"
     label: "Lab Data Lists"
     files:
@@ -45,7 +45,7 @@ collections:
             widget: "list"
             fields:
               - {label: "Name", name: "name", widget: "string"}
-              - {label: "Role (e.g., Ph.D. Scholar)", name: "role", widget: "string"}
+              - {label: "Role", name: "role", widget: "string"}
               - {label: "Photo", name: "photo", widget: "image"}
       
       - label: "Facilities & Equipment"
@@ -72,3 +72,27 @@ collections:
               - {label: "Authors", name: "authors", widget: "string"}
               - {label: "Journal Name", name: "journal", widget: "string"}
               - {label: "Year Published", name: "year", widget: "number"}
+
+      - label: "Research Areas"
+        name: "research"
+        file: "data/research.json"
+        fields:
+          - label: "Research Topics"
+            name: "topics"
+            widget: "list"
+            fields:
+              - {label: "Topic Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              
+      - label: "News & Updates"
+        name: "news"
+        file: "data/news.json"
+        fields:
+          - label: "News Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Date", name: "date", widget: "string"}
+              - {label: "Headline", name: "headline", widget: "string"}
+              - {label: "Short Description", name: "description", widget: "text"}
