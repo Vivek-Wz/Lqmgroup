@@ -38,62 +38,44 @@
     </section>
 
     <div class="container">
+        <h2 class="section-header" id="team">Research Group</h2>
         
-        <h2 class="section-header">Postdoctoral Researchers</h2>
-        <div class="grid-container">
-            
-            <div class="card team-member">
-                <img src="placeholder-postdoc.jpg" alt="Postdoc Name" class="member-img">
-                <h4>Dr. Firstname Lastname</h4>
-                <p><strong>Postdoctoral Fellow</strong></p>
-                <p><em>Focus: Energy-selective Contacts & Carrier Dynamics</em></p>
-            </div>
-
-            </div>
-
-        <h2 class="section-header" style="margin-top: 60px;">Ph.D. Scholars</h2>
-        <div class="grid-container">
-            
-            <div class="card team-member">
-                <img src="vivek.jpg" alt="Vivek Chandran" class="member-img">
-                <h4>Vivek Chandran</h4>
-                <p><strong>Ph.D. Scholar</strong></p>
-                <p><em>Focus: 2D Semiconductors & Data Analysis</em></p>
-            </div>
-
-            <div class="card team-member">
-                <img src="placeholder-phd.jpg" alt="PhD Name" class="member-img">
-                <h4>Firstname Lastname</h4>
-                <p><strong>Ph.D. Scholar</strong></p>
-                <p><em>Focus: Optoelectronic Device Fabrication</em></p>
-            </div>
-
-        </div>
-
-        <h2 class="section-header" style="margin-top: 60px;">Master's Students</h2>
-        <div class="grid-container">
-            
-            <div class="card team-member">
-                <img src="placeholder-masters.jpg" alt="Masters Name" class="member-img">
-                <h4>Firstname Lastname</h4>
-                <p><strong>Master's Student</strong></p>
-                <p><em>Focus: Synthesis of Transition Metal Dichalcogenides</em></p>
-            </div>
-
-            <div class="card team-member">
-                <img src="placeholder-masters2.jpg" alt="Masters Name" class="member-img">
-                <h4>Firstname Lastname</h4>
-                <p><strong>Master's Student</strong></p>
-                <p><em>Focus: Interfacial Solar-driven Systems</em></p>
-            </div>
-
-        </div>
-
+        <div class="grid-container" id="dynamic-team"></div>
+        
     </div>
 
     <footer>
         <p>&copy; 2026 Dr. Kamal Kumar Paul Research Group. All rights reserved.</p>
     </footer>
+<script>
+        fetch('data/team.json')
+            .then(response => {
+                if (!response.ok) throw new Error("Team data not found");
+                return response.json();
+            })
+            .then(data => {
+                const teamContainer = document.getElementById('dynamic-team');
+                let allMembersHTML = "";
 
+                // Loop through every team member in the CMS
+                data.members.forEach((member) => {
+                    // Check if a photo was uploaded, otherwise use a blank placeholder
+                    const imgPath = member.photo ? member.photo.replace(/^\//, '') : 'placeholder.jpg';
+                    
+                    // Build the HTML card for each person
+                    allMembersHTML += `
+                        <div class="card">
+                            <img src="${imgPath}" alt="${member.name}" style="width:100%; border-radius: 5px; margin-bottom: 15px;">
+                            <h3 style="margin: 0; color: #003366;">${member.name}</h3>
+                            <p style="margin-top: 5px; font-weight: bold; color: #555;">${member.role}</p>
+                        </div>
+                    `;
+                });
+
+                // Inject all the newly built cards into the webpage grid
+                teamContainer.innerHTML = allMembersHTML;
+            })
+            .catch(error => console.log("Team data hasn't been created in the CMS yet.", error));
+    </script>
 </body>
 </html>
