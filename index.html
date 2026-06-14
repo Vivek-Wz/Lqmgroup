@@ -54,63 +54,9 @@
     </div>
   <div class="news-scroller">
             <h2 class="section-header" id="news">News & Updates</h2>
-            <div class="news-track">
-                
-                <div class="news-card">
-                    <img src="placeholder-news1.jpg" alt="New Publication">
-                    <div class="news-content">
-                        <span class="news-date">May 2026</span>
-                        <h4>New Paper in Nature Materials</h4>
-                        <p>Our latest research on hot carrier extraction in TMD heterostructures is now live!</p>
-                    </div>
-                </div>
-
-                <div class="news-card">
-                    <img src="placeholder-news2.jpg" alt="New Equipment">
-                    <div class="news-content">
-                        <span class="news-date">April 2026</span>
-                        <h4>New CVD Furnace Installed</h4>
-                        <p>Expanding our synthesis capabilities for large-area 2D quantum materials.</p>
-                    </div>
-                </div>
-
-                <div class="news-card">
-                    <img src="placeholder-news3.jpg" alt="New Member">
-                    <div class="news-content">
-                        <span class="news-date">March 2026</span>
-                        <h4>Welcome to the Lab</h4>
-                        <p>Vivek Chandran joins the group as a Ph.D. Scholar focusing on 2D semiconductors.</p>
-                    </div>
-                </div>
-
-                <div class="news-card">
-                    <img src="placeholder-news1.jpg" alt="New Publication">
-                    <div class="news-content">
-                        <span class="news-date">May 2026</span>
-                        <h4>New Paper in Nature Materials</h4>
-                        <p>Our latest research on hot carrier extraction in TMD heterostructures is now live!</p>
-                    </div>
-                </div>
-
-                <div class="news-card">
-                    <img src="placeholder-news2.jpg" alt="New Equipment">
-                    <div class="news-content">
-                        <span class="news-date">April 2026</span>
-                        <h4>New CVD Furnace Installed</h4>
-                        <p>Expanding our synthesis capabilities for large-area 2D quantum materials.</p>
-                    </div>
-                </div>
-
-                <div class="news-card">
-                    <img src="placeholder-news3.jpg" alt="New Member">
-                    <div class="news-content">
-                        <span class="news-date">March 2026</span>
-                        <h4>Welcome to the Lab</h4>
-                        <p>Vivek Chandran joins the group as a Ph.D. Scholar focusing on 2D semiconductors.</p>
-                    </div>
-                </div>
-                
-            </div>
+            
+            <div class="news-track" id="dynamic-news"></div>
+            
         </div>
 
     <footer>
@@ -232,6 +178,38 @@
                 researchContainer.innerHTML = allResearchHTML;
             })
             .catch(error => console.log("Research data hasn't been created in the CMS yet.", error));
+    </script>
+    <script>
+        fetch('data/news.json')
+            .then(response => {
+                if (!response.ok) throw new Error("News data not found");
+                return response.json();
+            })
+            .then(data => {
+                const newsContainer = document.getElementById('dynamic-news');
+                let singleSetHTML = "";
+
+                // 1. Loop through the CMS data to build ONE standard set of cards
+                data.items.forEach((item) => {
+                    // Check for an image, fallback to a placeholder if empty
+                    const imgPath = item.image ? item.image.replace(/^\//, '') : 'placeholder-news1.jpg';
+                    
+                    singleSetHTML += `
+                        <div class="news-card">
+                            <img src="${imgPath}" alt="${item.headline}">
+                            <div class="news-content">
+                                <span class="news-date">${item.date}</span>
+                                <h4>${item.headline}</h4>
+                                <p>${item.description}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // 2. Clone the set 4 times to power the infinite CSS scrolling loop!
+                newsContainer.innerHTML = singleSetHTML + singleSetHTML + singleSetHTML + singleSetHTML;
+            })
+            .catch(error => console.log("News data hasn't been created in the CMS yet.", error));
     </script>
 </body>
 </html>
