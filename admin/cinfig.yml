@@ -1,0 +1,74 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "media"
+public_folder: "media"
+
+collections:
+  # --- 1. UNIQUE PAGES (Home, PI) ---
+  - name: "pages"
+    label: "Website Pages"
+    files:
+      - label: "Homepage Settings"
+        name: "home"
+        file: "data/home.json"
+        fields:
+          - label: "Image Slider"
+            name: "slider"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Heading", name: "heading", widget: "string"}
+              - {label: "Subtext", name: "subtext", widget: "string"}
+      
+      - label: "Principal Investigator Page"
+        name: "pi"
+        file: "data/pi.json"
+        fields:
+          - {label: "Name", name: "name", widget: "string"}
+          - {label: "Academic Title", name: "title", widget: "string"}
+          - {label: "Biography", name: "bio", widget: "text"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Profile Photo", name: "photo", widget: "image"}
+
+  # --- 2. LISTS & GRIDS (Team, Facilities, Pubs) ---
+  - name: "lists"
+    label: "Lab Data Lists"
+    files:
+      - label: "Team Members"
+        name: "team"
+        file: "data/team.json"
+        fields:
+          - label: "Members"
+            name: "members"
+            widget: "list"
+            fields:
+              - {label: "Name", name: "name", widget: "string"}
+              - {label: "Role (e.g., Ph.D. Scholar)", name: "role", widget: "string"}
+              - {label: "Photo", name: "photo", widget: "image"}
+      
+      - label: "Facilities & Equipment"
+        name: "facilities"
+        file: "data/facilities.json"
+        fields:
+          - label: "Equipment Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Machine Name", name: "name", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Photo", name: "photo", widget: "image"}
+              
+      - label: "Publications List"
+        name: "publications"
+        file: "data/publications.json"
+        fields:
+          - label: "Research Papers"
+            name: "papers"
+            widget: "list"
+            fields:
+              - {label: "Paper Title", name: "title", widget: "string"}
+              - {label: "Authors", name: "authors", widget: "string"}
+              - {label: "Journal Name", name: "journal", widget: "string"}
+              - {label: "Year Published", name: "year", widget: "number"}
