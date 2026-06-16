@@ -39,6 +39,26 @@
           "photo": "media/screenshot-2026-06-16-173614.png"
         }
       ]
+    },
+    {
+      "heading": "Structural Analysis",
+      "items": [
+        {
+          "name": "AFM ",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-174204.png"
+        },
+        {
+          "name": "Scanning Electron Microscope",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-174333.png"
+        },
+        {
+          "name": "X-Ray Photoelectron Spectroscopy",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-174414.png"
+        }
+      ]
     }
   ]
 }
