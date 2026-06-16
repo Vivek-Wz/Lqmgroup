@@ -1,0 +1,44 @@
+{
+  "categories": [
+    {
+      "heading": "Device Fabrication",
+      "items": [
+        {
+          "name": "Dry Transfer",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-172045.png"
+        },
+        {
+          "name": "Electron Beam Lithography 1",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-172739.png"
+        },
+        {
+          "name": "Electron Beam Lithography 2",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-172747.png"
+        },
+        {
+          "name": "Pattern Generator (laser Writer)",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-172806.png"
+        },
+        {
+          "name": "Mask Aligner",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-172839.png"
+        },
+        {
+          "name": "ICP Etcher (Atomic Layer Etching)",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-172908.png"
+        },
+        {
+          "name": "Wire Bonder",
+          "description": ".",
+          "photo": "media/screenshot-2026-06-16-173614.png"
+        }
+      ]
+    }
+  ]
+}
