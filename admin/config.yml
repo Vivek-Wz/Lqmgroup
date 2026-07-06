@@ -80,17 +80,17 @@ collections:
               - {label: "Year Published", name: "year", widget: "number"}
 
       - label: "Research Areas"
-    name: "research"
-    file: "data/research.json"
-    fields:
-      - label: "Research Topics"
-        name: "topics"
-        widget: "list"
+        name: "research"
+        file: "data/research.json"
         fields:
-          - {label: "Topic Title", name: "title", widget: "string"}
-          - {label: "Short Description", name: "description", widget: "text"}
-          - {label: "Detailed Information", name: "long_description", widget: "markdown"}
-          - {label: "Topic Image", name: "image", widget: "image"}
+          - label: "Research Topics"
+            name: "topics"
+            widget: "list"
+            fields:
+              - {label: "Topic Title", name: "title", widget: "string"}
+              - {label: "Short Description", name: "description", widget: "text"}
+              - {label: "Detailed Information", name: "long_description", widget: "markdown"}
+              - {label: "Topic Image", name: "image", widget: "image"}
               
       - label: "News & Updates"
         name: "news"
@@ -104,7 +104,8 @@ collections:
               - {label: "Date", name: "date", widget: "string"}
               - {label: "Headline", name: "headline", widget: "string"}
               - {label: "Short Description", name: "description", widget: "text"}
-       - label: "Opportunities & Openings"
+
+      - label: "Opportunities & Openings"
         name: "opportunities"
         file: "data/opportunities.json"
         fields:
