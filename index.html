@@ -35,18 +35,7 @@
     <div class="container">
         
         <!-- Image and Information of PI -->
-        <h2 class="section-header" id="pi">Principal Investigator</h2>
-        <section class="pi-section">
-            <img src="dr-paul.jpg" alt="Principal Investigator" class="pi-image" id="pi-photo">
-            <div class="pi-info">
-                <h2 id="pi-name">Dr. Kamal Kumar Paul</h2>
-                <h3 id="pi-title">Principal Investigator</h3>
-                <p id="pi-bio">We are dedicated to bridging the gap between fundamental quantum physics and next-generation optoelectronic applications.</p>
-                <p>Email: <a href="mailto:contact@hbut.edu.cn" id="pi-email">contact@hbut.edu.cn</a></p>
-            </div>
-        </section>
-        
-
+       
         <!-- Research Topics -->
        <h2 class="section-header" id="areas">Research Areas</h2>
         
@@ -125,27 +114,7 @@
             })
             .catch(error => console.log("Slider data hasn't been created in the CMS yet.", error));
     </script>
-      <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        fetch('data/pi.json')
-            .then(response => {
-                if (!response.ok) throw new Error("Data not found");
-                return response.json();
-            })
-            .then(data => {
-                document.getElementById('pi-name').innerText = data.name;
-                document.getElementById('pi-title').innerText = data.title;
-                document.getElementById('pi-bio').innerText = data.bio;
-                document.getElementById('pi-email').innerText = data.email;
-                document.getElementById('pi-email').href = "mailto:" + data.email;
-                
-                if(data.photo) {
-                    document.getElementById('pi-photo').src = data.photo.replace(/^\//, ''); 
-                }
-            })
-            .catch(error => console.log("PI data hasn't been created in the CMS yet.", error));
-    });
-</script>
+
     <script>
         fetch('data/research.json')
             .then(response => {
