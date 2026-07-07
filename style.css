@@ -1,135 +1,41 @@
-/* Clean, academic color palette */
+/* --- Clean, academic color palette --- */
 :root {
     --primary-blue: #003366;
     --light-gray: #f4f4f9;
     --text-dark: #333;
 }
-    body {
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    color: #333;
-    
-    /* The Ambient Glow */
+    color: var(--text-dark);
     background-color: #fdfbf7; 
     background-image: 
         radial-gradient(circle at 0% 20%, rgba(254, 243, 199, 0.4) 0%, transparent 40%),
         radial-gradient(circle at 100% 80%, rgba(224, 242, 254, 0.4) 0%, transparent 40%);
-    background-attachment: fixed; /* Keeps the glow in place when you scroll */
+    background-attachment: fixed;
 }
   
-/* --- Navigation Menu --- */
+/* --- Navigation --- */
 nav {
     background-color: var(--primary-blue);
-    padding: 15px 20px;
+    padding: 15px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-nav .logo {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-decoration: none;
-}
+nav .logo { color: white; font-size: 1.2rem; font-weight: bold; text-decoration: none; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+nav ul li a { color: white; text-decoration: none; font-size: 0.95rem; }
+nav ul li a:hover { text-decoration: underline; }
 
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 20px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 0.95rem;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-/* --- Image Slider Styling --- */
-.slider-container {
-    max-width: 100%;
-    height: 70vh; /* Banner height */
-    position: relative;
-    margin: auto;
-    overflow: hidden;
-    background-color: #000;
-}
-
-.slide {
-    display: none;
-    width: 100%;
-    height: 100%;
-}
-
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.6; /* Darkens image so text is readable */
-}
-
-.slide-text {
-    color: #f2f2f2;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: 80%;
-}
-
-.slide-text h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.slide-text p {
-    font-size: 1.2rem;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-}
-
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
-    padding: 20px;
-    color: white;
-    font-weight: bold;
-    font-size: 30px;
-    transition: 0.3s ease;
-    border-radius: 3px;
-    user-select: none;
-    background-color: rgba(0,0,0,0.2);
-}
-
-.next { right: 10px; }
-.prev { left: 10px; }
-.prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
-
-.fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
-}
-
-@keyframes fade {
-    from {opacity: .4} 
-    to {opacity: 1}
-}
-
-/* --- Main Content Container --- */
+/* --- Container Alignment (Widening the site) --- */
 .container {
-    max-width: 1000px;
+    width: 95%;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 40px 20px;
 }
@@ -141,217 +47,72 @@ nav ul li a:hover {
     margin-top: 50px;
 }
 
-/* --- PI Section --- */
-.pi-section {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    margin-top: 20px;
-}
-
-.pi-image {
-    width: 220px;
-    height: 220px;
-    background-color: #ccc;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-.pi-info h2 {
-    color: var(--primary-blue);
-    margin-top: 0;
-    margin-bottom: 5px;
-}
-
-.pi-info h3 {
-    margin-top: 0;
-    color: #666;
-    font-weight: normal;
-}
-
-/* --- Grid Layouts (Cards) --- */
+/* --- Improved Grid Layout --- */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
 }
 
 .card {
     background: white;
+    border: 1px solid #e0e0e0;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- News Scroller --- */
+.news-scroller {
+    width: 95%;
+    max-width: 1400px;
+    margin: 40px auto;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+.news-track {
+    display: flex;
+    width: max-content;
+    animation: scrollLeft 30s linear infinite;
+}
+
+.news-track:hover { animation-play-state: paused; }
+
+.news-card {
+    width: 320px;
+    margin-right: 30px;
+    background: white;
     border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
-.card h3 {
-    margin-top: 0;
-    color: var(--primary-blue);
-}
-
-/* --- Team Section Specifics --- */
-.team-member {
-    text-align: center;
-    padding: 15px;
-}
-
-.team-member h4 {
-    margin: 0 0 5px 0;
-    font-size: 1.1rem;
-    color: var(--primary-blue);
-}
-
-.team-member p {
-    margin: 0;
-    font-size: 0.9rem;
-}
+.news-card img { width: 100%; height: 180px; object-fit: cover; }
+.news-content { padding: 15px; }
 
 /* --- Footer --- */
 footer {
     background-color: var(--primary-blue);
     color: white;
     text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-}
-/* --- News & Updates Auto-Scroller --- */
-
-    .news-scroller {
-    width: 100%;
-    max-width: 1000px; /* This creates the "box" */
-    margin: 20px auto 0 auto; /* The 'auto' perfectly centers the box on your screen */
-    overflow: hidden; /* This acts as the walls, hiding cards outside the 1000px box */
-    padding: 10px 0;
+    padding: 30px;
+    margin-top: 60px;
 }
 
-
-.news-track {
-    display: flex;
-    width: max-content;
-    animation: scrollLeft 25s linear infinite;
-    /* 25s controls the speed. Lower = faster, Higher = slower */
-    animation: scrollLeft 25s linear infinite; 
-}
-
-/* Pauses the scrolling when a user hovers their mouse over it */
-.news-track:hover {
-    animation-play-state: paused; 
-}
-.news-card {
-    width: 300px;
-    margin-right: 20px; /* This replaces the gap */
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    overflow: hidden;
-    flex-shrink: 0; 
-}
-
-
-.news-card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-bottom: 2px solid var(--primary-blue);
-}
-
-.news-content {
-    padding: 15px;
-}
-
-.news-content h4 {
-    margin: 5px 0;
-    color: var(--primary-blue);
-    font-size: 1.1rem;
-}
-
-.news-content p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #555;
-}
-
-.news-date {
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: #888;
-    text-transform: uppercase;
-}
-
-/* The actual animation moving the track to the left */
+/* --- Animations --- */
 @keyframes scrollLeft {
     0% { transform: translateX(0); }
-    /* Shifts it exactly 50% left to loop perfectly with the duplicated cards */
     100% { transform: translateX(-50%); } 
 }
-/* --- Mobile Responsiveness (For Phones & Tablets) --- */
+
+/* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
-    
-    /* 1. Stack the Navigation Menu */
-    nav {
-        flex-direction: column;
-        text-align: center;
-    }
-    nav ul {
-        margin-top: 15px;
-        flex-wrap: wrap; /* Allows links to wrap to a second line if the screen is very small */
-        justify-content: center;
-        gap: 15px;
-    }
-
-    /* 2. Shrink the Slider text and height */
-    .slider-container {
-        height: 50vh; /* Makes the banner a bit shorter on phones */
-    }
-    .slide-text h1 {
-        font-size: 1.8rem; /* Shrinks the main title */
-    }
-    .slide-text p {
-        font-size: 1rem;
-    }
-    .prev, .next {
-        padding: 10px;
-        font-size: 20px; /* Makes the arrows smaller */
-    }
-
-    /* 3. Stack the PI Section */
-    .pi-section {
-        flex-direction: column; /* Puts Dr. Paul's photo ABOVE his text instead of next to it */
-        text-align: center;
-        gap: 20px;
-    }
-    
-    /* Center the container text */
-    .section-header {
-        text-align: center;
-    }
-    /* Center the main container */
-.container {
-    max-width: 1200px; /* Limits the "stretching" on wide monitors */
-    margin: 0 auto;    /* Centers the whole site */
-    padding: 0 20px;   /* Adds breathing room on sides */
+    nav { flex-direction: column; }
+    .grid-container { grid-template-columns: 1fr; }
+    .container { width: 90%; }
 }
-
-/* Make the grid look balanced */
-.grid-container {
-    display: grid;
-    /* This creates 3 equal columns, and adds a nice gap */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 30px;
-    margin: 40px 0;
-}
-
-/* Give the cards a consistent height so they don't look "undefined" */
-.card {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-}
-
