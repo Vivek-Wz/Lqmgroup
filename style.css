@@ -327,4 +327,31 @@ footer {
     .section-header {
         text-align: center;
     }
+    /* Center the main container */
+.container {
+    max-width: 1200px; /* Limits the "stretching" on wide monitors */
+    margin: 0 auto;    /* Centers the whole site */
+    padding: 0 20px;   /* Adds breathing room on sides */
 }
+
+/* Make the grid look balanced */
+.grid-container {
+    display: grid;
+    /* This creates 3 equal columns, and adds a nice gap */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px;
+    margin: 40px 0;
+}
+
+/* Give the cards a consistent height so they don't look "undefined" */
+.card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+}
+
