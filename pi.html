@@ -104,6 +104,23 @@
     <footer>
         <p>&copy; 2026 Dr. Kamal Kumar Paul Research Group. All rights reserved.</p>
     </footer>
-
+<script>
+        fetch('data/settings.json')
+            .then(response => {
+                if (!response.ok) throw new Error("Settings not found.");
+                return response.json();
+            })
+            .then(data => {
+                const root = document.documentElement;
+                
+                // Inject the CMS values directly into the CSS variables
+                if(data.font_family) root.style.setProperty('--main-font', data.font_family);
+                if(data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
+                if(data.text_color) root.style.setProperty('--text-color', data.text_color);
+                if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
+                if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
+            })
+            .catch(error => console.log("Global settings not yet published.", error));
+    </script>
 </body>
 </html>
