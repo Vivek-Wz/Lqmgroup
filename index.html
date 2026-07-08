@@ -38,9 +38,8 @@
        
         <!-- Research Topics -->
        <h2 class="section-header" id="areas">Research Areas</h2>
-<div class="news-scroller">
-    <div class="news-track" id="dynamic-research" style="display: flex; gap: 20px;">
-        </div>
+<div class="grid-container" id="dynamic-research">
+    <!-- JavaScript will inject cards here -->
 </div>
   <div class="news-scroller">
             <h2 class="section-header" id="news">News & Updates</h2>
@@ -178,13 +177,14 @@
         .then(response => response.json())
         .then(data => {
             const researchContainer = document.getElementById('dynamic-research');
-            let singleSetHTML = "";
+            let html = "";
 
             data.topics.forEach((topic, index) => {
                 const imgPath = topic.image ? topic.image.replace(/^\//, '') : 'placeholder.jpg';
-                
-                singleSetHTML += `
-                    <div class="card" style="text-align: center; min-width: 300px; padding: 20px;">
+
+                // Static card structure (no cloning!)
+                html += `
+                    <div class="card" style="text-align: center; padding: 20px;">
                         <img src="${imgPath}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px;">
                         <h3 style="cursor: pointer; color: #003366; margin-top: 15px;" onclick="toggleDetails(${index})">
                             ${topic.title} &#9662;
@@ -196,8 +196,8 @@
                     </div>
                 `;
             });
-            // Clone 4 times for infinite scrolling effect
-            researchContainer.innerHTML = singleSetHTML + singleSetHTML + singleSetHTML + singleSetHTML;
+            // Inject content once
+            researchContainer.innerHTML = html;
         });
 
     function toggleDetails(index) {
