@@ -1,4 +1,29 @@
 /* --- Clean, academic color palette --- */
+/* --- 1. DEFAULT VARIABLES (Fallback if CMS fails) --- */
+:root {
+    --main-font: 'Inter', -apple-system, sans-serif;
+    --text-size: 16px;
+    --text-color: #333333;
+    --header-size: 32px;
+    --container-width: 1100px;
+}
+
+/* --- 2. APPLY VARIABLES GLOBALLY --- */
+body {
+    font-family: var(--main-font);
+    font-size: var(--text-size);
+    color: var(--text-color);
+}
+
+h1, h2, h3, .section-header {
+    font-size: var(--header-size);
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 20px;
+}
 :root {
     --primary-blue: #003366;
     --light-gray: #f4f4f9;
