@@ -31,6 +31,15 @@ collections:
           - {label: "Biography", name: "bio", widget: "text"}
           - {label: "Email", name: "email", widget: "string"}
           - {label: "Profile Photo", name: "photo", widget: "image"}
+      - label: "Global Design Settings"
+        name: "settings"
+        file: "data/settings.json"
+        fields:
+          - {label: "Base Font Family", name: "font_family", widget: "select", options: ["'Inter', sans-serif", "'Roboto', sans-serif", "'Playfair Display', serif", "system-ui, sans-serif"]}
+          - {label: "Body Text Size (px)", name: "text_size", widget: "number", value_type: "int", default: 16, min: 12, max: 24}
+          - {label: "Body Text Color", name: "text_color", widget: "color", default: "#333333"}
+          - {label: "Primary Header Size (px)", name: "header_size", widget: "number", value_type: "int", default: 32, min: 20, max: 60}
+          - {label: "Main Container Width (px)", name: "container_width", widget: "number", value_type: "int", default: 1100, step: 50}
 
    # --- 2. LISTS & GRIDS ---
   - name: "lists"
