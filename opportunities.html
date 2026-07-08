@@ -23,9 +23,11 @@
 
     <div class="container" style="margin-top: 40px; min-height: 60vh;">
         <h2 class="section-header">Join the Lab</h2>
-        <p style="text-align: center; margin-bottom: 40px; color: #555;">We are always looking for motivated researchers to join our team. See our current openings below.</p>
+        <p style="text-align: center; margin-bottom: 40px; color: #555;">We are always looking for motivated researchers to join our team at the Institute of Low-Dimensional Quantum Materials. See our current openings below.</p>
         
-        <div id="dynamic-opportunities"></div>
+        <div id="dynamic-opportunities">
+            <p style="text-align: center; color: #888;">Loading opportunities...</p>
+        </div>
         
     </div>
 
@@ -38,38 +40,44 @@
     <script>
         fetch('data/opportunities.json')
             .then(response => {
-                if (!response.ok) throw new Error("Opportunities data not found");
+                if (!response.ok) throw new Error("JSON file not found.");
                 return response.json();
             })
             .then(data => {
                 const oppContainer = document.getElementById('dynamic-opportunities');
-                let allOppHTML = "";
-
-                // Loop through every open position in the CMS
-                if (data.positions) {
-                    data.positions.forEach(pos => {
-                        // Determine badge color based on status
-                        const badgeColor = pos.status === "Open" ? "green" : "red";
-                        
-                        // Build a wide card for each job posting
-                        allOppHTML += `
-                            <div class="card" style="margin-bottom: 20px; padding: 20px; text-align: left;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
-                                    <h3 style="margin: 0; color: #003366;">${pos.title}</h3>
-                                    <span style="background-color: ${badgeColor}; color: white; padding: 3px 10px; border-radius: 15px; font-size: 0.85rem; font-weight: bold;">${pos.status}</span>
-                                </div>
-                                <p><strong>Description:</strong> ${pos.description}</p>
-                                <p><strong>Requirements:</strong> ${pos.requirements}</p>
-                                <p style="margin-top: 15px; font-style: italic;"><strong>How to Apply:</strong> ${pos.apply}</p>
-                            </div>
-                        `;
-                    });
+                
+                // Check if positions exist in the CMS
+                if (!data.positions || data.positions.length === 0) {
+                    oppContainer.innerHTML = "<p style='text-align: center;'>There are currently no open positions. Please check back later.</p>";
+                    return;
                 }
 
-                // Inject the job postings into the page
+                let allOppHTML = "";
+
+                data.positions.forEach(pos => {
+                    const badgeColor = pos.status === "Open" ? "green" : "red";
+                    
+                    allOppHTML += `
+                        <div class="card" style="margin-bottom: 20px; padding: 25px; text-align: left; border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
+                                <h3 style="margin: 0; color: #003366; font-size: 1.4rem;">${pos.title}</h3>
+                                <span style="background-color: ${badgeColor}; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: bold;">${pos.status}</span>
+                            </div>
+                            <p><strong>Description:</strong> ${pos.description}</p>
+                            <p><strong>Requirements:</strong> ${pos.requirements}</p>
+                            <div style="margin-top: 20px; padding: 15px; background-color: #f4f4f9; border-left: 4px solid #003366; border-radius: 4px;">
+                                <p style="margin: 0; font-style: italic;"><strong>How to Apply:</strong> ${pos.apply}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
                 oppContainer.innerHTML = allOppHTML;
             })
-            .catch(error => console.log("Opportunities data hasn't been created in the CMS yet.", error));
+            .catch(error => {
+                console.log("Waiting for CMS data to be published...", error);
+                document.getElementById('dynamic-opportunities').innerHTML = "<p style='text-align: center;'>No positions are listed at this time.</p>";
+            });
     </script>
 
 </body>
