@@ -172,39 +172,72 @@
             })
             .catch(error => console.log("News data hasn't been created in the CMS yet.", error));
     </script>
-        <script>
-    fetch('data/research.json')
-        .then(response => response.json())
-        .then(data => {
-            const researchContainer = document.getElementById('dynamic-research');
-            let html = "";
+   <script>
+        let globalResearchData = []; // Store data globally so the modal can access it
 
-            data.topics.forEach((topic, index) => {
-                const imgPath = topic.image ? topic.image.replace(/^\//, '') : 'placeholder.jpg';
+        fetch('data/research.json')
+            .then(response => response.json())
+            .then(data => {
+                globalResearchData = data.topics;
+                const researchContainer = document.getElementById('dynamic-research');
+                let html = "";
 
-                // Static card structure (no cloning!)
-                html += `
-                    <div class="card" style="text-align: center; padding: 20px;">
-                        <img src="${imgPath}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px;">
-                        <h3 style="cursor: pointer; color: #003366; margin-top: 15px;" onclick="toggleDetails(${index})">
-                            ${topic.title} &#9662;
-                        </h3>
-                        <p>${topic.description}</p>
-                        <div id="details-${index}" style="display: none; padding: 15px; background: #f9f9f9; text-align: left; margin-top: 10px;">
-                            ${topic.long_description}
+                data.topics.forEach((topic, index) => {
+                    const imgPath = topic.image ? topic.image.replace(/^\//, '') : 'placeholder.jpg';
+                    
+                    // The card is now entirely clickable
+                    html += `
+                        <div class="card" style="text-align: center; padding: 25px; cursor: pointer; transition: transform 0.2s; border: 1px solid #eaeaea; border-radius: 8px;" onclick="openModal(${index})" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <img src="${imgPath}" style="width: 100%; height: 160px; object-fit: cover; border-radius: 5px; margin-bottom: 15px;">
+                            <h3 style="color: #003366; margin: 0 0 10px 0; font-size: 1.3rem;">
+                                ${topic.title}
+                            </h3>
+                            <p style="color: #555; font-size: 0.95rem; margin-bottom: 15px;">${topic.description}</p>
+                            <span style="color: #00509e; font-weight: bold; font-size: 0.9rem; border-bottom: 1px solid #00509e; padding-bottom: 2px;">Read More &rarr;</span>
                         </div>
-                    </div>
-                `;
-            });
-            // Inject content once
-            researchContainer.innerHTML = html;
-        });
+                    `;
+                });
+                
+                researchContainer.innerHTML = html;
+            })
+            .catch(error => console.log("Error loading research data:", error));
 
-    function toggleDetails(index) {
-        const div = document.getElementById('details-' + index);
-        div.style.display = (div.style.display === 'none') ? 'block' : 'none';
-    }
-</script>
+        // --- Modal Functions ---
+        const modal = document.getElementById('researchModal');
+
+        function openModal(index) {
+            const topic = globalResearchData[index];
+            const imgPath = topic.image ? topic.image.replace(/^\//, '') : '';
+            
+            // Populate the modal with the clicked topic's data
+            document.getElementById('modal-title').innerText = topic.title;
+            document.getElementById('modal-body').innerHTML = topic.long_description || "<p>Detailed information coming soon.</p>";
+            
+            const modalImg = document.getElementById('modal-image');
+            if (imgPath) {
+                modalImg.src = imgPath;
+                modalImg.style.display = "block";
+            } else {
+                modalImg.style.display = "none";
+            }
+
+            // Show the modal
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden"; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto"; // Restore background scrolling
+        }
+
+        // Close modal if user clicks the dark background outside the box
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
         <script>
         fetch('data/settings.json')
             .then(response => {
