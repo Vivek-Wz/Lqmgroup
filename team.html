@@ -94,6 +94,47 @@
                 document.getElementById('team-masters').innerHTML = masterHTML;
             })
             .catch(error => console.log("Team data hasn't been created in the CMS yet.", error));
+    </script
+        <script>
+        fetch('data/settings.json')
+            .then(response => {
+                if (!response.ok) throw new Error("Settings not found.");
+                return response.json();
+            })
+            .then(data => {
+                // 1. Update CSS Variables
+                const root = document.documentElement;
+                if(data.font_family) root.style.setProperty('--main-font', data.font_family);
+                if(data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
+                if(data.text_color) root.style.setProperty('--text-color', data.text_color);
+                if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
+                if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
+
+                // 2. Update the Research Group Name Globally
+                if(data.group_name) {
+                    // Update Navigation Logo
+                    document.querySelectorAll('.logo').forEach(logo => {
+                        logo.innerText = data.group_name;
+                    });
+                    
+                    // Update Footer Copyright text
+                    document.querySelectorAll('footer .footer-bottom p').forEach(footer => {
+                        const currentYear = new Date().getFullYear();
+                        footer.innerHTML = `&copy; ${currentYear} ${data.group_name}. All rights reserved.`;
+                    });
+
+                    // Update Browser Tab Title safely
+                    const currentTitle = document.title;
+                    if (currentTitle.includes('-')) {
+                        // Keeps page names like "Opportunities -" but swaps the group name
+                        const pageName = currentTitle.split('-')[0].trim();
+                        document.title = `${pageName} - ${data.group_name}`;
+                    } else {
+                        document.title = data.group_name;
+                    }
+                }
+            })
+            .catch(error => console.log("Global settings not yet published.", error));
     </script>
 </body>
 </html>
