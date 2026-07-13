@@ -36,11 +36,12 @@ collections:
         name: "settings"
         file: "data/settings.json"
         fields:
-          - {label: "Base Font Family", name: "font_family", widget: "select", options: ["'Inter', sans-serif", "'Roboto', sans-serif", "'Playfair Display', serif", "system-ui, sans-serif"]}
-          - {label: "Body Text Size (px)", name: "text_size", widget: "number", value_type: "int", default: 16, min: 12, max: 24}
-          - {label: "Body Text Color", name: "text_color", widget: "color", default: "#333333"}
-          - {label: "Primary Header Size (px)", name: "header_size", widget: "number", value_type: "int", default: 32, min: 20, max: 60}
-          - {label: "Main Container Width (px)", name: "container_width", widget: "number", value_type: "int", default: 1100, step: 50}
+          - {label: "Research Group Name", name: "group_name", widget: "string", required: false}
+          - {label: "Base Font Family", name: "font_family", widget: "select", options: ["'Inter', sans-serif", "'Roboto', sans-serif", "'Playfair Display', serif", "system-ui, sans-serif"], required: false}
+          - {label: "Body Text Size (px)", name: "text_size", widget: "number", value_type: "int", required: false}
+          - {label: "Body Text Color", name: "text_color", widget: "color", required: false}
+          - {label: "Primary Header Size (px)", name: "header_size", widget: "number", value_type: "int", required: false}
+          - {label: "Main Container Width (px)", name: "container_width", widget: "number", value_type: "int", required: false}
 
   # --- 2. LISTS & GRIDS ---
   - name: "lists"
