@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Photonic and Optoelectronic Device Group QPOD </title>
+    <title>Quantum Photonic and Optoelectronic Device Group</title>
     <!-- This links to your design file! -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -23,38 +23,56 @@
     </nav>
 
     <!-- Main Container: Image Slider -->
-  <section class="slider-container" id="home">
-        
+    <section class="slider-container" id="home">
         <div id="dynamic-slider"></div>
-
         <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
         <a class="next" onclick="changeSlide(1)">&#10095;</a>
-
     </section>
-    <!-- Main Content (PI, Team, and Research Areas) -->
+
+    <!-- Main Content -->
     <div class="container">
         
-        <!-- Image and Information of PI -->
-       
         <!-- Research Topics -->
-       <h2 class="section-header" id="areas">Research Areas</h2>
-<div class="grid-container" id="dynamic-research">
-    <!-- JavaScript will inject cards here -->
-</div>
-  <div class="news-scroller">
-            <h2 class="section-header" id="news">News & Updates</h2>
-            
-            <div class="news-track" id="dynamic-news"></div>
-            
+        <h2 class="section-header" id="areas">Research Areas</h2>
+        <!-- Added a grid style fallback here to ensure the cards line up beautifully -->
+        <div class="grid-container" id="dynamic-research" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <!-- JavaScript will inject cards here -->
         </div>
 
+    </div>
+
+    <!-- News & Updates -->
+    <div class="news-scroller">
+        <h2 class="section-header" id="news">News & Updates</h2>
+        <div class="news-track" id="dynamic-news"></div>
+    </div>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-bottom">
             <p>&copy; 2026 Dr. Kamal Kumar Paul Research Group. All rights reserved.</p>
         </div>
     </footer>
 
-        <script>
+    <!-- ========================================== -->
+    <!-- THE RESEARCH MODAL (Must be above scripts) -->
+    <!-- ========================================== -->
+    <div id="researchModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title" style="color: #003366; margin-top: 0;"></h2>
+            <img id="modal-image" src="" alt="Research Topic" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; display: none;">
+            <div id="modal-body" style="line-height: 1.6; text-align: left;"></div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- SCRIPTS -->
+    <!-- ========================================== -->
+
+    <!-- 1. Slider Script -->
+    <script>
         fetch('data/home.json')
             .then(response => {
                 if (!response.ok) throw new Error("Slider data not found");
@@ -64,12 +82,8 @@
                 const sliderContainer = document.getElementById('dynamic-slider');
                 let allSlidesHTML = "";
 
-                // Loop through every slide you created in the CMS
                 data.slider.forEach((slide) => {
-                    // Check if an image exists, and fix the path if the CMS added a leading slash
                     const imgPath = slide.image ? slide.image.replace(/^\//, '') : '';
-                    
-                    // Build the HTML for each slide
                     allSlidesHTML += `
                         <div class="slide fade">
                             <img src="${imgPath}" alt="${slide.heading}">
@@ -81,15 +95,11 @@
                     `;
                 });
 
-                // Inject all the newly built slides into the webpage
                 sliderContainer.innerHTML = allSlidesHTML;
 
-                // --- START THE ANIMATION ---
-                // We start the animation only AFTER the slides are built
                 let slideIndex = 1;
                 showSlides(slideIndex);
 
-                // Make the arrows work globally
                 window.changeSlide = function(n) {
                     showSlides(slideIndex += n);
                 };
@@ -107,7 +117,6 @@
                     }
                 }
                 
-                // Auto-change image every 5 seconds
                 setInterval(function() {
                     changeSlide(1);
                 }, 5000); 
@@ -115,65 +124,9 @@
             .catch(error => console.log("Slider data hasn't been created in the CMS yet.", error));
     </script>
 
+    <!-- 2. Research & Modal Script -->
     <script>
-        fetch('data/research.json')
-            .then(response => {
-                if (!response.ok) throw new Error("Research data not found");
-                return response.json();
-            })
-            .then(data => {
-                const researchContainer = document.getElementById('dynamic-research');
-                let allResearchHTML = "";
-
-                // Loop through every research topic in the CMS
-                data.topics.forEach((topic) => {
-                    allResearchHTML += `
-                        <div class="card">
-                            <h3>${topic.title}</h3>
-                            <p>${topic.description}</p>
-                        </div>
-                    `;
-                });
-
-                // Inject the built cards into the grid
-                researchContainer.innerHTML = allResearchHTML;
-            })
-            .catch(error => console.log("Research data hasn't been created in the CMS yet.", error));
-    </script>
-    <script>
-        fetch('data/news.json')
-            .then(response => {
-                if (!response.ok) throw new Error("News data not found");
-                return response.json();
-            })
-            .then(data => {
-                const newsContainer = document.getElementById('dynamic-news');
-                let singleSetHTML = "";
-
-                // 1. Loop through the CMS data to build ONE standard set of cards
-                data.items.forEach((item) => {
-                    // Check for an image, fallback to a placeholder if empty
-                    const imgPath = item.image ? item.image.replace(/^\//, '') : 'placeholder-news1.jpg';
-                    
-                    singleSetHTML += `
-                        <div class="news-card">
-                            <img src="${imgPath}" alt="${item.headline}">
-                            <div class="news-content">
-                                <span class="news-date">${item.date}</span>
-                                <h4>${item.headline}</h4>
-                                <p>${item.description}</p>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                // 2. Clone the set 4 times to power the infinite CSS scrolling loop!
-                newsContainer.innerHTML = singleSetHTML + singleSetHTML + singleSetHTML + singleSetHTML;
-            })
-            .catch(error => console.log("News data hasn't been created in the CMS yet.", error));
-    </script>
-   <script>
-        let globalResearchData = []; // Store data globally so the modal can access it
+        let globalResearchData = []; 
 
         fetch('data/research.json')
             .then(response => response.json())
@@ -185,7 +138,6 @@
                 data.topics.forEach((topic, index) => {
                     const imgPath = topic.image ? topic.image.replace(/^\//, '') : 'placeholder.jpg';
                     
-                    // The card is now entirely clickable
                     html += `
                         <div class="card" style="text-align: center; padding: 25px; cursor: pointer; transition: transform 0.2s; border: 1px solid #eaeaea; border-radius: 8px;" onclick="openModal(${index})" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                             <img src="${imgPath}" style="width: 100%; height: 160px; object-fit: cover; border-radius: 5px; margin-bottom: 15px;">
@@ -202,14 +154,12 @@
             })
             .catch(error => console.log("Error loading research data:", error));
 
-        // --- Modal Functions ---
         const modal = document.getElementById('researchModal');
 
         function openModal(index) {
             const topic = globalResearchData[index];
             const imgPath = topic.image ? topic.image.replace(/^\//, '') : '';
             
-            // Populate the modal with the clicked topic's data
             document.getElementById('modal-title').innerText = topic.title;
             document.getElementById('modal-body').innerHTML = topic.long_description || "<p>Detailed information coming soon.</p>";
             
@@ -221,24 +171,55 @@
                 modalImg.style.display = "none";
             }
 
-            // Show the modal
             modal.style.display = "block";
-            document.body.style.overflow = "hidden"; // Prevent background scrolling
+            document.body.style.overflow = "hidden"; 
         }
 
         function closeModal() {
             modal.style.display = "none";
-            document.body.style.overflow = "auto"; // Restore background scrolling
+            document.body.style.overflow = "auto"; 
         }
 
-        // Close modal if user clicks the dark background outside the box
         window.onclick = function(event) {
             if (event.target == modal) {
                 closeModal();
             }
         }
     </script>
-        <script>
+
+    <!-- 3. News Script -->
+    <script>
+        fetch('data/news.json')
+            .then(response => {
+                if (!response.ok) throw new Error("News data not found");
+                return response.json();
+            })
+            .then(data => {
+                const newsContainer = document.getElementById('dynamic-news');
+                let singleSetHTML = "";
+
+                data.items.forEach((item) => {
+                    const imgPath = item.image ? item.image.replace(/^\//, '') : 'placeholder-news1.jpg';
+                    
+                    singleSetHTML += `
+                        <div class="news-card">
+                            <img src="${imgPath}" alt="${item.headline}">
+                            <div class="news-content">
+                                <span class="news-date">${item.date}</span>
+                                <h4>${item.headline}</h4>
+                                <p>${item.description}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                newsContainer.innerHTML = singleSetHTML + singleSetHTML + singleSetHTML + singleSetHTML;
+            })
+            .catch(error => console.log("News data hasn't been created in the CMS yet.", error));
+    </script>
+
+    <!-- 4. Global Settings Script -->
+    <script>
         fetch('data/settings.json')
             .then(response => {
                 if (!response.ok) throw new Error("Settings not found.");
@@ -247,23 +228,33 @@
             .then(data => {
                 const root = document.documentElement;
                 
-                // Inject the CMS values directly into the CSS variables
                 if(data.font_family) root.style.setProperty('--main-font', data.font_family);
                 if(data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
                 if(data.text_color) root.style.setProperty('--text-color', data.text_color);
                 if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
                 if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
+                
+                if(data.group_name) {
+                    document.querySelectorAll('.logo').forEach(logo => {
+                        logo.innerText = data.group_name;
+                    });
+                    
+                    document.querySelectorAll('footer .footer-bottom p').forEach(footer => {
+                        const currentYear = new Date().getFullYear();
+                        footer.innerHTML = `&copy; ${currentYear} ${data.group_name}. All rights reserved.`;
+                    });
+
+                    const currentTitle = document.title;
+                    if (currentTitle.includes('-')) {
+                        const pageName = currentTitle.split('-')[0].trim();
+                        document.title = `${pageName} - ${data.group_name}`;
+                    } else {
+                        document.title = data.group_name;
+                    }
+                }
             })
             .catch(error => console.log("Global settings not yet published.", error));
     </script>
-        <!-- The Research Modal -->
-    <div id="researchModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 id="modal-title" style="color: #003366; margin-top: 0;"></h2>
-            <img id="modal-image" src="" alt="Research Topic" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; display: none;">
-            <div id="modal-body" style="line-height: 1.6; text-align: left;"></div>
-        </div>
-    </div>
+
 </body>
 </html>
