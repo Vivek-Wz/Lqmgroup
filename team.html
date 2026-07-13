@@ -96,7 +96,7 @@
             })
             .catch(error => console.log("Team data hasn't been created in the CMS yet.", error));
     </script
-        <script>
+    <script>
         fetch('data/settings.json')
             .then(response => {
                 if (!response.ok) throw new Error("Settings not found.");
@@ -136,6 +136,6 @@
                 }
             })
             .catch(error => console.log("Global settings not yet published.", error));
-    </script>
+</script>
 </body>
 </html>
