@@ -43,9 +43,9 @@
 <body>
 
     <nav>
-        <a href="index.html" class="logo">Paul Research Group</a>
+        <a href="index.html" class="logo">Research Group</a>
         <ul>
-             <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="pi.html">Principal Investigator</a></li>
             <li><a href="team.html">Research Group</a></li>
             <li><a href="publications.html">Publications</a></li>
@@ -61,15 +61,17 @@
     <div class="container">
         
         <section class="pi-section" style="margin-top: 0;">
-            <img src="dr-paul.jpg" alt="Dr. Kamal Kumar Paul" class="pi-image" style="width: 250px; height: 250px;">
+            <!-- Added id="pi-photo" so the script can find and replace the image -->
+            <img id="pi-photo" src="" alt="Principal Investigator" class="pi-image" style="width: 250px; height: 250px; object-fit: cover; background-color: #f0f0f0;">
             <div class="pi-info">
-                <h2 style="font-size: 2rem;">Dr. Kamal Kumar Paul</h2>
-                <h3 style="font-size: 1.2rem; margin-bottom: 15px;">Professor </h3>
+                <!-- Added IDs to text fields for dynamic CMS injection -->
+                <h2 id="pi-name" style="font-size: 2rem;">Loading Name...</h2>
+                <h3 id="pi-title" style="font-size: 1.2rem; margin-bottom: 15px;">Loading Title...</h3>
                 <p><strong>Institute of Low-Dimensional Quantum Materials</strong><br>
                 Hubei University of Technology<br>
                 Wuhan, China</p>
                 <p style="margin-top: 15px;">
-                    ✉️ <a href="mailto:contact@hbut.edu.cn">contact@hbut.edu.cn</a> <br>
+                    ✉️ <a id="pi-email" href="mailto:">Loading Email...</a> <br>
                     🔗 <a href="#" target="_blank">Google Scholar Profile</a>
                 </p>
             </div>
@@ -78,7 +80,10 @@
         <div class="bio-content">
             
             <h3>Biography</h3>
-            <p>Dr. Kamal Kumar Paul leads the research initiatives at the Institute of Low-Dimensional Quantum Materials. His work bridges the gap between fundamental solid-state physics and applied optoelectronics. With a deep focus on the synthesis and characterization of two-dimensional transition metal dichalcogenides (TMDs), Dr. Paul's research group aims to push the boundaries of next-generation photovoltaic devices, including high-efficiency hot carrier solar cells and advanced interfacial energy systems.</p>
+            <!-- Added id="pi-bio" to inject the text area from the CMS -->
+            <div id="pi-bio">
+                <p>Loading biography data from CMS...</p>
+            </div>
 
             <h3>Education & Academic Background</h3>
             <ul class="bio-list">
@@ -103,26 +108,49 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Dr. Kamal Kumar Paul Research Group. All rights reserved.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Research Group. All rights reserved.</p>
+        </div>
     </footer>
-<script>
-        fetch('data/settings.json')
+
+    <!-- Script to fetch the PI data from the CMS -->
+    <script>
+        fetch('data/pi.json')
             .then(response => {
-                if (!response.ok) throw new Error("Settings not found.");
+                if (!response.ok) throw new Error("PI data not found");
                 return response.json();
             })
             .then(data => {
-                const root = document.documentElement;
+                // Update Name
+                if(data.name) document.getElementById('pi-name').innerText = data.name;
                 
-                // Inject the CMS values directly into the CSS variables
-                if(data.font_family) root.style.setProperty('--main-font', data.font_family);
-                if(data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
-                if(data.text_color) root.style.setProperty('--text-color', data.text_color);
-                if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
-                if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
+                // Update Title
+                if(data.title) document.getElementById('pi-title').innerText = data.title;
+                
+                // Update Bio
+                if(data.bio) {
+                    // Replaces line breaks with paragraph tags for formatting
+                    const formattedBio = data.bio.split('\n').map(para => `<p>${para}</p>`).join('');
+                    document.getElementById('pi-bio').innerHTML = formattedBio;
+                }
+                
+                // Update Email
+                if(data.email) {
+                    const emailElement = document.getElementById('pi-email');
+                    emailElement.innerText = data.email;
+                    emailElement.href = `mailto:${data.email}`;
+                }
+                
+                // Update Image
+                if(data.photo) {
+                    const imgPath = data.photo.replace(/^\//, '');
+                    document.getElementById('pi-photo').src = imgPath;
+                }
             })
-            .catch(error => console.log("Global settings not yet published.", error));
+            .catch(error => console.log("PI data hasn't been published from the CMS yet.", error));
     </script>
+
+    <!-- Script to fetch the Global Settings (Font, Color, Group Name) -->
     <script>
         fetch('data/settings.json')
             .then(response => {
@@ -140,21 +168,17 @@
 
                 // 2. Update the Research Group Name Globally
                 if(data.group_name) {
-                    // Update Navigation Logo
                     document.querySelectorAll('.logo').forEach(logo => {
                         logo.innerText = data.group_name;
                     });
                     
-                    // Update Footer Copyright text
                     document.querySelectorAll('footer .footer-bottom p').forEach(footer => {
                         const currentYear = new Date().getFullYear();
                         footer.innerHTML = `&copy; ${currentYear} ${data.group_name}. All rights reserved.`;
                     });
 
-                    // Update Browser Tab Title safely
                     const currentTitle = document.title;
                     if (currentTitle.includes('-')) {
-                        // Keeps page names like "Opportunities -" but swaps the group name
                         const pageName = currentTitle.split('-')[0].trim();
                         document.title = `${pageName} - ${data.group_name}`;
                     } else {
