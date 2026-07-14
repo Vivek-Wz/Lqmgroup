@@ -2,14 +2,24 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "media"
-public_folder: "media"
+media_folder: "images"
+public_folder: "/images"
 
 collections:
-  # --- 1. UNIQUE PAGES (Home, PI) ---
   - name: "pages"
     label: "Website Pages"
     files:
+      - label: "Global Design Settings"
+        name: "settings"
+        file: "data/settings.json"
+        fields:
+          - {label: "Research Group Name", name: "group_name", widget: "string", default: "Institute of Low-Dimensional Quantum Materials"}
+          - {label: "Base Font Family", name: "font_family", widget: "select", options: ["'Inter', sans-serif", "'Roboto', sans-serif", "'Playfair Display', serif", "system-ui, sans-serif"]}
+          - {label: "Body Text Size (px)", name: "text_size", widget: "number", value_type: "int", default: 16, min: 12, max: 24}
+          - {label: "Body Text Color", name: "text_color", widget: "color", default: "#333333"}
+          - {label: "Primary Header Size (px)", name: "header_size", widget: "number", value_type: "int", default: 32, min: 20, max: 60}
+          - {label: "Main Container Width (px)", name: "container_width", widget: "number", value_type: "int", default: 1100, step: 50}
+
       - label: "Homepage Settings"
         name: "home"
         file: "data/home.json"
@@ -21,8 +31,34 @@ collections:
               - {label: "Image", name: "image", widget: "image"}
               - {label: "Heading", name: "heading", widget: "string"}
               - {label: "Subtext", name: "subtext", widget: "string"}
-      
- - label: "Principal Investigator Page"
+
+      - label: "Research Data"
+        name: "research"
+        file: "data/research.json"
+        fields:
+          - label: "Research Topics"
+            name: "topics"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Short Description", name: "description", widget: "text"}
+              - {label: "Long Technical Details", name: "long_description", widget: "markdown"}
+              - {label: "Thumbnail/Modal Image", name: "image", widget: "image", required: false}
+
+      - label: "News & Updates"
+        name: "news"
+        file: "data/news.json"
+        fields:
+          - label: "News Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Date", name: "date", widget: "string"}
+              - {label: "Headline", name: "headline", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Image", name: "image", widget: "image", required: false}
+
+      - label: "Principal Investigator Page"
         name: "pi"
         file: "data/pi.json"
         fields:
@@ -53,101 +89,3 @@ collections:
               - {label: "Year", name: "year", widget: "string"}
               - {label: "Award Name", name: "name", widget: "string"}
               - {label: "Awarding Organization", name: "organization", widget: "string"}
-          
-      - label: "Global Design Settings"
-        name: "settings"
-        file: "data/settings.json"
-        fields:
-          - {label: "Research Group Name", name: "group_name", widget: "string", required: false}
-          - {label: "Base Font Family", name: "font_family", widget: "select", options: ["'Inter', sans-serif", "'Roboto', sans-serif", "'Playfair Display', serif", "system-ui, sans-serif"], required: false}
-          - {label: "Body Text Size (px)", name: "text_size", widget: "number", value_type: "int", required: false}
-          - {label: "Body Text Color", name: "text_color", widget: "color", required: false}
-          - {label: "Primary Header Size (px)", name: "header_size", widget: "number", value_type: "int", required: false}
-          - {label: "Main Container Width (px)", name: "container_width", widget: "number", value_type: "int", required: false}
-
-  # --- 2. LISTS & GRIDS ---
-  - name: "lists"
-    label: "Lab Data Lists"
-    files:
-      - label: "Team Members"
-        name: "team"
-        file: "data/team.json"
-        fields:
-          - label: "Members"
-            name: "members"
-            widget: "list"
-            fields:
-              - {label: "Name", name: "name", widget: "string"}
-              - {label: "Category", name: "category", widget: "select", options: ["Post Doc", "PhD Student", "Master Student"]}
-              - {label: "Specific Role (Optional)", name: "role", widget: "string"}
-              - {label: "Photo", name: "photo", widget: "image"}
-      
-      - label: "Facilities & Equipment"
-        name: "facilities"
-        file: "data/facilities.json"
-        fields:
-          - label: "Equipment Categories"
-            name: "categories"
-            widget: "list"
-            fields:
-              - {label: "Category Heading", name: "heading", widget: "string"}
-              - label: "Equipment Items in this Category"
-                name: "items"
-                widget: "list"
-                fields:
-                  - {label: "Machine Name", name: "name", widget: "string"}
-                  - {label: "Description", name: "description", widget: "text"}
-                  - {label: "Photo", name: "photo", widget: "image"}
-              
-      - label: "Publications List"
-        name: "publications"
-        file: "data/publications.json"
-        fields:
-          - label: "Research Papers"
-            name: "papers"
-            widget: "list"
-            fields:
-              - {label: "Paper Title", name: "title", widget: "string"}
-              - {label: "Authors", name: "authors", widget: "string"}
-              - {label: "Journal Name", name: "journal", widget: "string"}
-              - {label: "Year Published", name: "year", widget: "number"}
-
-      - label: "Research Areas"
-        name: "research"
-        file: "data/research.json"
-        fields:
-          - label: "Research Topics"
-            name: "topics"
-            widget: "list"
-            fields:
-              - {label: "Topic Title", name: "title", widget: "string"}
-              - {label: "Short Description", name: "description", widget: "text"}
-              - {label: "Detailed Information", name: "long_description", widget: "markdown"}
-              - {label: "Topic Image", name: "image", widget: "image"}
-              
-      - label: "News & Updates"
-        name: "news"
-        file: "data/news.json"
-        fields:
-          - label: "News Items"
-            name: "items"
-            widget: "list"
-            fields:
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Date", name: "date", widget: "string"}
-              - {label: "Headline", name: "headline", widget: "string"}
-              - {label: "Short Description", name: "description", widget: "text"}
-
-      - label: "Opportunities & Openings"
-        name: "opportunities"
-        file: "data/opportunities.json"
-        fields:
-          - label: "Open Positions"
-            name: "positions"
-            widget: "list"
-            fields:
-              - {label: "Position Title", name: "title", widget: "string"}
-              - {label: "Status", name: "status", widget: "select", options: ["Open", "Filled"]}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Requirements", name: "requirements", widget: "text"}
-              - {label: "How to Apply", name: "apply", widget: "string"}
