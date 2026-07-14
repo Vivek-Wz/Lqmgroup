@@ -22,7 +22,7 @@ collections:
               - {label: "Heading", name: "heading", widget: "string"}
               - {label: "Subtext", name: "subtext", widget: "string"}
       
-      - label: "Principal Investigator Page"
+ - label: "Principal Investigator Page"
         name: "pi"
         file: "data/pi.json"
         fields:
@@ -31,6 +31,28 @@ collections:
           - {label: "Biography", name: "bio", widget: "text"}
           - {label: "Email", name: "email", widget: "string"}
           - {label: "Profile Photo", name: "photo", widget: "image"}
+          - label: "Education & Academic Background"
+            name: "education"
+            widget: "list"
+            fields:
+              - {label: "Year (e.g., 2017 - 2021)", name: "year", widget: "string"}
+              - {label: "Degree / Position", name: "degree", widget: "string"}
+              - {label: "Institution & Location", name: "institution", widget: "string"}
+              - {label: "Extra Details (e.g., Thesis Title)", name: "details", widget: "string", required: false}
+          - label: "Professional Experience"
+            name: "experience"
+            widget: "list"
+            fields:
+              - {label: "Year (e.g., 2021 - Present)", name: "year", widget: "string"}
+              - {label: "Job Title", name: "title", widget: "string"}
+              - {label: "Institution", name: "institution", widget: "string"}
+          - label: "Selected Honors & Awards"
+            name: "awards"
+            widget: "list"
+            fields:
+              - {label: "Year", name: "year", widget: "string"}
+              - {label: "Award Name", name: "name", widget: "string"}
+              - {label: "Awarding Organization", name: "organization", widget: "string"}
           
       - label: "Global Design Settings"
         name: "settings"
