@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="style.css"> 
     <style>
         /* Specific styling to make team profile pictures circular and uniform */
-        .member-img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
+       .member-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 8px; /* Gives the square very slightly rounded corners for a modern look */
             object-fit: cover;
+            object-position: top center; /* Ensures faces stay in the frame */
             margin-bottom: 15px;
-            background-color: #e0e0e0;
-            border: 3px solid var(--light-gray);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: #f4f4f9;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
     </style>
 </head>
