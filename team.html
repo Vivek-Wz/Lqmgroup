@@ -6,17 +6,42 @@
     <title>Research Group - Paul Research Group</title>
     <link rel="stylesheet" href="style.css"> 
     <style>
-        /* Specific styling to make team profile pictures square and uniform */
-       .member-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 8px; /* Gives the square very slightly rounded corners for a modern look */
+        /* 1. Lock the Grid Layout so it stops stretching */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 280px); /* Strictly locks the column width */
+            justify-content: center; /* Centers the whole block of cards in the middle of the screen */
+            gap: 30px; /* Space between the cards */
+            margin-bottom: 50px;
+        }
+
+        /* 2. Lock the Card Size and Alignment */
+        .card {
+            width: 280px !important; /* Forces the rigid width */
+            height: 340px !important; /* Forces the rigid height */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centers everything horizontally */
+            justify-content: flex-start; /* Keeps everything locked to the top */
+            padding: 30px 15px;
+            margin: 0;
+            background: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* 3. Standardize the Image */
+        .member-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 8px;
             object-fit: cover;
-            object-position: top center; /* Ensures faces stay in the frame */
-            margin-bottom: 15px;
+            object-position: top center;
+            margin-bottom: 20px;
             background-color: #f4f4f9;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
     </style>
 </head>
