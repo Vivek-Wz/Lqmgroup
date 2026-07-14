@@ -9,17 +9,19 @@ collections:
   - name: "pages"
     label: "Website Pages"
     files:
+      # 1. Global Settings
       - label: "Global Design Settings"
         name: "settings"
         file: "data/settings.json"
         fields:
-          - {label: "Research Group Name", name: "group_name", widget: "string", default: "Institute of Low-Dimensional Quantum Materials",required: false}
-          - {label: "Base Font Family", name: "font_family", widget: "select", options: ["'Inter', sans-serif", "'Roboto', sans-serif", "'Playfair Display', serif", "system-ui, sans-serif"],required: false}
-          - {label: "Body Text Size (px)", name: "text_size", widget: "number", value_type: "int", default: 16, min: 12, max: 24,required: false}
-          - {label: "Body Text Color", name: "text_color", widget: "color", default: "#333333",required: false}
-          - {label: "Primary Header Size (px)", name: "header_size", widget: "number", value_type: "int", default: 32, min: 20, max: 60,required: false}
-          - {label: "Main Container Width (px)", name: "container_width", widget: "number", value_type: "int", default: 1100, step: 50,required: false}
+          - {label: "Research Group Name", name: "group_name", widget: "string", default: "Institute of Low-Dimensional Quantum Materials", required: false}
+          - {label: "Base Font Family", name: "font_family", widget: "select", options: ["'Inter', sans-serif", "'Roboto', sans-serif", "'Playfair Display', serif", "system-ui, sans-serif"], required: false}
+          - {label: "Body Text Size (px)", name: "text_size", widget: "number", value_type: "int", default: 16, min: 12, max: 24, required: false}
+          - {label: "Body Text Color", name: "text_color", widget: "color", default: "#333333", required: false}
+          - {label: "Primary Header Size (px)", name: "header_size", widget: "number", value_type: "int", default: 32, min: 20, max: 60, required: false}
+          - {label: "Main Container Width (px)", name: "container_width", widget: "number", value_type: "int", default: 1100, step: 50, required: false}
 
+      # 2. Homepage (Slider)
       - label: "Homepage Settings"
         name: "home"
         file: "data/home.json"
@@ -27,11 +29,13 @@ collections:
           - label: "Image Slider"
             name: "slider"
             widget: "list"
+            required: false
             fields:
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Heading", name: "heading", widget: "string"}
-              - {label: "Subtext", name: "subtext", widget: "string"}
+              - {label: "Image", name: "image", widget: "image", required: false}
+              - {label: "Heading", name: "heading", widget: "string", required: false}
+              - {label: "Subtext", name: "subtext", widget: "string", required: false}
 
+      # 3. Research Areas
       - label: "Research Data"
         name: "research"
         file: "data/research.json"
@@ -39,12 +43,14 @@ collections:
           - label: "Research Topics"
             name: "topics"
             widget: "list"
+            required: false
             fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Short Description", name: "description", widget: "text"}
-              - {label: "Long Technical Details", name: "long_description", widget: "markdown"}
+              - {label: "Title", name: "title", widget: "string", required: false}
+              - {label: "Short Description", name: "description", widget: "text", required: false}
+              - {label: "Long Technical Details", name: "long_description", widget: "markdown", required: false}
               - {label: "Thumbnail/Modal Image", name: "image", widget: "image", required: false}
 
+      # 4. News & Updates
       - label: "News & Updates"
         name: "news"
         file: "data/news.json"
@@ -52,40 +58,106 @@ collections:
           - label: "News Items"
             name: "items"
             widget: "list"
+            required: false
             fields:
-              - {label: "Date", name: "date", widget: "string"}
-              - {label: "Headline", name: "headline", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Date", name: "date", widget: "string", required: false}
+              - {label: "Headline", name: "headline", widget: "string", required: false}
+              - {label: "Description", name: "description", widget: "text", required: false}
               - {label: "Image", name: "image", widget: "image", required: false}
 
+      # 5. Principal Investigator
       - label: "Principal Investigator Page"
         name: "pi"
         file: "data/pi.json"
         fields:
-          - {label: "Name", name: "name", widget: "string"}
-          - {label: "Academic Title", name: "title", widget: "string"}
-          - {label: "Biography", name: "bio", widget: "text"}
-          - {label: "Email", name: "email", widget: "string"}
-          - {label: "Profile Photo", name: "photo", widget: "image"}
+          - {label: "Name", name: "name", widget: "string", required: false}
+          - {label: "Academic Title", name: "title", widget: "string", required: false}
+          - {label: "Biography", name: "bio", widget: "text", required: false}
+          - {label: "Email", name: "email", widget: "string", required: false}
+          - {label: "Profile Photo", name: "photo", widget: "image", required: false}
           - label: "Education & Academic Background"
             name: "education"
             widget: "list"
+            required: false
             fields:
-              - {label: "Year (e.g., 2017 - 2021)", name: "year", widget: "string"}
-              - {label: "Degree / Position", name: "degree", widget: "string"}
-              - {label: "Institution & Location", name: "institution", widget: "string"}
+              - {label: "Year (e.g., 2017 - 2021)", name: "year", widget: "string", required: false}
+              - {label: "Degree / Position", name: "degree", widget: "string", required: false}
+              - {label: "Institution & Location", name: "institution", widget: "string", required: false}
               - {label: "Extra Details (e.g., Thesis Title)", name: "details", widget: "string", required: false}
           - label: "Professional Experience"
             name: "experience"
             widget: "list"
+            required: false
             fields:
-              - {label: "Year (e.g., 2021 - Present)", name: "year", widget: "string"}
-              - {label: "Job Title", name: "title", widget: "string"}
-              - {label: "Institution", name: "institution", widget: "string"}
+              - {label: "Year (e.g., 2021 - Present)", name: "year", widget: "string", required: false}
+              - {label: "Job Title", name: "title", widget: "string", required: false}
+              - {label: "Institution", name: "institution", widget: "string", required: false}
           - label: "Selected Honors & Awards"
             name: "awards"
             widget: "list"
+            required: false
             fields:
-              - {label: "Year", name: "year", widget: "string"}
-              - {label: "Award Name", name: "name", widget: "string"}
-              - {label: "Awarding Organization", name: "organization", widget: "string"}
+              - {label: "Year", name: "year", widget: "string", required: false}
+              - {label: "Award Name", name: "name", widget: "string", required: false}
+              - {label: "Awarding Organization", name: "organization", widget: "string", required: false}
+
+      # 6. Team / Research Group
+      - label: "Research Group (Team)"
+        name: "team"
+        file: "data/team.json"
+        fields:
+          - label: "Team Members"
+            name: "members"
+            widget: "list"
+            required: false
+            fields:
+              - {label: "Name", name: "name", widget: "string", required: false}
+              - {label: "Role", name: "role", widget: "string", required: false}
+              - {label: "Category", name: "category", widget: "select", options: ["Post Doc", "PhD Student", "Master Student"], required: false}
+              - {label: "Photo", name: "photo", widget: "image", required: false}
+
+      # 7. Facilities & Equipment
+      - label: "Facilities & Equipment"
+        name: "facilities"
+        file: "data/facilities.json"
+        fields:
+          - label: "Equipment List"
+            name: "equipment"
+            widget: "list"
+            required: false
+            fields:
+              - {label: "Equipment Name", name: "name", widget: "string", required: false}
+              - {label: "Description", name: "description", widget: "text", required: false}
+              - {label: "Image", name: "image", widget: "image", required: false}
+
+      # 8. Publications
+      - label: "Publications"
+        name: "publications"
+        file: "data/publications.json"
+        fields:
+          - label: "Publication List"
+            name: "papers"
+            widget: "list"
+            required: false
+            fields:
+              - {label: "Year", name: "year", widget: "string", required: false}
+              - {label: "Title", name: "title", widget: "string", required: false}
+              - {label: "Authors", name: "authors", widget: "string", required: false}
+              - {label: "Journal/Conference", name: "journal", widget: "string", required: false}
+              - {label: "Link (DOI/URL)", name: "link", widget: "string", required: false}
+
+      # 9. Opportunities
+      - label: "Opportunities (Job Openings)"
+        name: "opportunities"
+        file: "data/opportunities.json"
+        fields:
+          - label: "Open Positions"
+            name: "positions"
+            widget: "list"
+            required: false
+            fields:
+              - {label: "Job Title", name: "title", widget: "string", required: false}
+              - {label: "Status", name: "status", widget: "select", options: ["Open", "Closed"], required: false}
+              - {label: "Description", name: "description", widget: "text", required: false}
+              - {label: "Requirements", name: "requirements", widget: "text", required: false}
+              - {label: "How to Apply", name: "apply", widget: "string", required: false}
