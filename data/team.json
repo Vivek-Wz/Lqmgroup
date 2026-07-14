@@ -14,12 +14,14 @@
     {
       "name": "Huawei Lou",
       "category": "PhD Student",
-      "photo": "/images/weixin-image_20260713164257_260_7.jpg"
+      "photo": "/images/weixin-image_20260713164257_260_7.jpg",
+      "role": "  "
     },
     {
       "name": "Gen Li",
       "category": "Master Student",
-      "photo": "/images/weixin-image_20260713162602_34_11.jpg"
+      "photo": "/images/weixin-image_20260713162602_34_11.jpg",
+      "role": "  "
     }
   ]
 }
