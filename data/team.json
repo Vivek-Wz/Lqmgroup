@@ -1,16 +1,25 @@
 {
   "members": [
     {
-      "name": "Vivek Chandran",
-      "role": " ",
-      "photo": "media/screenshot-2026-06-12-110839.png",
-      "category": "PhD Student"
-    },
-    {
       "name": "Gedela Hareesh",
       "category": "PhD Student",
       "photo": "media/screenshot-2026-07-13-160445.png",
       "role": "    "
+    },
+    {
+      "name": "Asok Mondal",
+      "role": "Lead Researcher",
+      "category": "Post Doc"
+    },
+    {
+      "name": "Huawei Lou",
+      "category": "PhD Student",
+      "photo": "/images/weixin-image_20260713164257_260_7.jpg"
+    },
+    {
+      "name": "Gen Li",
+      "category": "Master Student",
+      "photo": "/images/weixin-image_20260713162602_34_11.jpg"
     }
   ]
 }
