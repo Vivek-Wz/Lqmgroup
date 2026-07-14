@@ -64,8 +64,12 @@
         <p>The researchers and scholars driving our innovations in quantum materials.</p>
     </section>
 
-    <div class="container">
+   <div class="container">
         
+        <!-- NEW SECTION ADDED HERE -->
+        <h2 class="section-header">Research Lead & Postdoc</h2>
+        <div class="grid-container" id="team-leads"></div>
+
         <h2 class="section-header">Postdoctoral Researchers</h2>
         <div class="grid-container" id="team-postdocs"></div>
 
@@ -76,6 +80,7 @@
         <div class="grid-container" id="team-masters"></div>
         
     </div>
+    </div>
 
     <footer>
         <div class="footer-bottom">
@@ -84,6 +89,7 @@
     </footer>
 
     <!-- Script to fetch the Team data from the CMS -->
+   <!-- Script to fetch the Team data from the CMS -->
     <script>
         fetch('data/team.json')
             .then(response => {
@@ -91,6 +97,8 @@
                 return response.json();
             })
             .then(data => {
+                // Added a new bucket for the Research Leads
+                let leadHTML = "";
                 let postdocHTML = "";
                 let phdHTML = "";
                 let masterHTML = "";
@@ -111,15 +119,17 @@
                     
                     // Build the standard card for the person
                     let card = `
-                        <div class="card" style="text-align: center; padding: 25px 15px;">
+                        <div class="card">
                             <img src="${imgPath}" alt="${name}" class="member-img">
-                            <h3 style="margin: 0; color: #003366; font-size: 1.2rem;">${name}</h3>
-                            <p style="margin-top: 5px; font-weight: bold; color: #555; font-size: 0.95rem;">${role}</p>
+                            <h3 style="margin: 0; color: #003366; font-size: 1.2rem; text-align: center;">${name}</h3>
+                            <p style="margin-top: 5px; font-weight: bold; color: #555; font-size: 0.95rem; text-align: center;">${role}</p>
                         </div>
                     `;
 
-                    // SORTING LOGIC: Check the dropdown category and add to the right bucket
-                    if (category === "Post Doc") {
+                    // SORTING LOGIC: Added the new category check
+                    if (category === "Research lead and post doc") {
+                        leadHTML += card;
+                    } else if (category === "Post Doc") {
                         postdocHTML += card;
                     } else if (category === "PhD Student") {
                         phdHTML += card;
@@ -129,6 +139,7 @@
                 });
 
                 // Inject the filled buckets into the matching HTML containers
+                document.getElementById('team-leads').innerHTML = leadHTML; // New injection
                 document.getElementById('team-postdocs').innerHTML = postdocHTML;
                 document.getElementById('team-phds').innerHTML = phdHTML;
                 document.getElementById('team-masters').innerHTML = masterHTML;
