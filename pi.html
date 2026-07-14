@@ -111,36 +111,57 @@
 
     <!-- Script to fetch the PI data from the CMS -->
     <script>
+        <!-- Script to fetch the PI data from the CMS -->
+    <script>
         fetch('data/pi.json')
             .then(response => {
                 if (!response.ok) throw new Error("PI data not found");
                 return response.json();
             })
             .then(data => {
-                // Update Name
+                // Update Basic Info
                 if(data.name) document.getElementById('pi-name').innerText = data.name;
-                
-                // Update Title
                 if(data.title) document.getElementById('pi-title').innerText = data.title;
-                
-                // Update Bio
                 if(data.bio) {
-                    // Replaces line breaks with paragraph tags for formatting
                     const formattedBio = data.bio.split('\n').map(para => `<p>${para}</p>`).join('');
                     document.getElementById('pi-bio').innerHTML = formattedBio;
                 }
-                
-                // Update Email
                 if(data.email) {
                     const emailElement = document.getElementById('pi-email');
                     emailElement.innerText = data.email;
                     emailElement.href = `mailto:${data.email}`;
                 }
-                
-                // Update Image
                 if(data.photo) {
                     const imgPath = data.photo.replace(/^\//, '');
                     document.getElementById('pi-photo').src = imgPath;
+                }
+
+                // Update Education List
+                if(data.education) {
+                    let eduHTML = "";
+                    data.education.forEach(item => {
+                        let detailsStr = item.details ? `<br><em>${item.details}</em>` : '';
+                        eduHTML += `<li><span class="year-badge">${item.year}</span> <strong>${item.degree}</strong>, ${item.institution} ${detailsStr}</li>`;
+                    });
+                    document.getElementById('pi-education').innerHTML = eduHTML;
+                }
+
+                // Update Experience List
+                if(data.experience) {
+                    let expHTML = "";
+                    data.experience.forEach(item => {
+                        expHTML += `<li><span class="year-badge">${item.year}</span> <strong>${item.title}</strong>, ${item.institution}</li>`;
+                    });
+                    document.getElementById('pi-experience').innerHTML = expHTML;
+                }
+
+                // Update Awards List
+                if(data.awards) {
+                    let awardsHTML = "";
+                    data.awards.forEach(item => {
+                        awardsHTML += `<li><span class="year-badge">${item.year}</span> <strong>${item.name}</strong>, ${item.organization}</li>`;
+                    });
+                    document.getElementById('pi-awards').innerHTML = awardsHTML;
                 }
             })
             .catch(error => console.log("PI data hasn't been published from the CMS yet.", error));
