@@ -61,10 +61,8 @@
     <div class="container">
         
         <section class="pi-section" style="margin-top: 0;">
-            <!-- Added id="pi-photo" so the script can find and replace the image -->
             <img id="pi-photo" src="" alt="Principal Investigator" class="pi-image" style="width: 250px; height: 250px; object-fit: cover; background-color: #f0f0f0;">
             <div class="pi-info">
-                <!-- Added IDs to text fields for dynamic CMS injection -->
                 <h2 id="pi-name" style="font-size: 2rem;">Loading Name...</h2>
                 <h3 id="pi-title" style="font-size: 1.2rem; margin-bottom: 15px;">Loading Title...</h3>
                 <p><strong>Institute of Low-Dimensional Quantum Materials</strong><br>
@@ -80,7 +78,6 @@
         <div class="bio-content">
             
             <h3>Biography</h3>
-            <!-- Added id="pi-bio" to inject the text area from the CMS -->
             <div id="pi-bio">
                 <p>Loading biography data from CMS...</p>
             </div>
@@ -111,57 +108,79 @@
 
     <!-- Script to fetch the PI data from the CMS -->
     <script>
-        <!-- Script to fetch the PI data from the CMS -->
-    <script>
         fetch('data/pi.json')
             .then(response => {
                 if (!response.ok) throw new Error("PI data not found");
                 return response.json();
             })
             .then(data => {
-                // Update Basic Info
-                if(data.name) document.getElementById('pi-name').innerText = data.name;
-                if(data.title) document.getElementById('pi-title').innerText = data.title;
+                if (!data) return; // Stop if file is completely empty
+
+                // 1. Update Basic Info with Safety Fallbacks
+                document.getElementById('pi-name').innerText = data.name ? data.name : "Principal Investigator";
+                document.getElementById('pi-title').innerText = data.title ? data.title : "Lead Researcher";
+                
                 if(data.bio) {
                     const formattedBio = data.bio.split('\n').map(para => `<p>${para}</p>`).join('');
                     document.getElementById('pi-bio').innerHTML = formattedBio;
+                } else {
+                    document.getElementById('pi-bio').innerHTML = "<p>Biography details coming soon.</p>";
                 }
+
                 if(data.email) {
                     const emailElement = document.getElementById('pi-email');
                     emailElement.innerText = data.email;
                     emailElement.href = `mailto:${data.email}`;
+                } else {
+                    document.getElementById('pi-email').innerText = "Email not provided";
                 }
+
                 if(data.photo) {
                     const imgPath = data.photo.replace(/^\//, '');
                     document.getElementById('pi-photo').src = imgPath;
                 }
 
-                // Update Education List
-                if(data.education) {
+                // 2. Update Education List
+                if(data.education && data.education.length > 0) {
                     let eduHTML = "";
                     data.education.forEach(item => {
+                        let year = item.year ? item.year : "";
+                        let degree = item.degree ? item.degree : "";
+                        let inst = item.institution ? item.institution : "";
                         let detailsStr = item.details ? `<br><em>${item.details}</em>` : '';
-                        eduHTML += `<li><span class="year-badge">${item.year}</span> <strong>${item.degree}</strong>, ${item.institution} ${detailsStr}</li>`;
+                        eduHTML += `<li><span class="year-badge">${year}</span> <strong>${degree}</strong>, ${inst} ${detailsStr}</li>`;
                     });
                     document.getElementById('pi-education').innerHTML = eduHTML;
+                } else {
+                    document.getElementById('pi-education').innerHTML = "<li>No education data published yet.</li>";
                 }
 
-                // Update Experience List
-                if(data.experience) {
+                // 3. Update Experience List
+                if(data.experience && data.experience.length > 0) {
                     let expHTML = "";
                     data.experience.forEach(item => {
-                        expHTML += `<li><span class="year-badge">${item.year}</span> <strong>${item.title}</strong>, ${item.institution}</li>`;
+                        let year = item.year ? item.year : "";
+                        let title = item.title ? item.title : "";
+                        let inst = item.institution ? item.institution : "";
+                        expHTML += `<li><span class="year-badge">${year}</span> <strong>${title}</strong>, ${inst}</li>`;
                     });
                     document.getElementById('pi-experience').innerHTML = expHTML;
+                } else {
+                    document.getElementById('pi-experience').innerHTML = "<li>No professional experience published yet.</li>";
                 }
 
-                // Update Awards List
-                if(data.awards) {
+                // 4. Update Awards List
+                if(data.awards && data.awards.length > 0) {
                     let awardsHTML = "";
                     data.awards.forEach(item => {
-                        awardsHTML += `<li><span class="year-badge">${item.year}</span> <strong>${item.name}</strong>, ${item.organization}</li>`;
+                        let year = item.year ? item.year : "";
+                        let name = item.name ? item.name : "";
+                        let org = item.organization ? item.organization : "";
+                        awardsHTML += `<li><span class="year-badge">${year}</span> <strong>${name}</strong>, ${org}</li>`;
                     });
                     document.getElementById('pi-awards').innerHTML = awardsHTML;
+                } else {
+                    document.getElementById('pi-awards').innerHTML = "<li>No awards published yet.</li>";
                 }
             })
             .catch(error => console.log("PI data hasn't been published from the CMS yet.", error));
