@@ -113,7 +113,7 @@ collections:
             fields:
               - {label: "Name", name: "name", widget: "string", required: false}
               - {label: "Role", name: "role", widget: "string", required: false}
-              - {label: "Category", name: "category", widget: "select", options: ["Post Doc", "PhD Student", "Master Student"], required: false}
+              -- {label: "Category", name: "category", widget: "select", options: ["Research lead and post doc", "Post Doc", "PhD Student", "Master Student"], required: false}
               - {label: "Photo", name: "photo", widget: "image", required: false}
 
       # 7. Facilities & Equipment
