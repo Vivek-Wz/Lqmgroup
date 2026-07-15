@@ -115,6 +115,33 @@ collections:
               - {label: "Role", name: "role", widget: "string", required: false}
               - {label: "Category", name: "category", widget: "select", options: ["Research lead and post doc", "Post Doc", "PhD Student", "Master Student"], required: false}
               - {label: "Photo", name: "photo", widget: "image", required: false}
+              - {label: "Enable Profile Popup", name: "enable_popup", widget: "boolean", default: false, required: false, hint: "Turn this ON to show the 'Read More' button on this person's card."}
+              - {label: "Biography (Popup Modal)", name: "bio", widget: "text", required: false}
+              - label: "Education (Popup Modal)"
+                name: "education"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "Year", name: "year", widget: "string", required: false}
+                  - {label: "Degree", name: "degree", widget: "string", required: false}
+                  - {label: "Institution", name: "institution", widget: "string", required: false}
+                  - {label: "Extra Details (e.g. Thesis)", name: "details", widget: "string", required: false}
+              - label: "Experience (Popup Modal)"
+                name: "experience"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "Year", name: "year", widget: "string", required: false}
+                  - {label: "Title", name: "title", widget: "string", required: false}
+                  - {label: "Institution", name: "institution", widget: "string", required: false}
+              - label: "Awards (Popup Modal)"
+                name: "awards"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "Year", name: "year", widget: "string", required: false}
+                  - {label: "Award Name", name: "name", widget: "string", required: false}
+                  - {label: "Organization", name: "organization", widget: "string", required: false}
 
       # 7. Facilities & Equipment
       - label: "Facilities & Equipment"
