@@ -6,24 +6,22 @@
     <title>Research Group - Paul Research Group</title>
     <link rel="stylesheet" href="style.css"> 
     <style>
-        /* 1. Lock the Grid Layout so it stops stretching */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, 280px); /* Strictly locks the column width */
-            justify-content: center; /* Centers the whole block of cards in the middle of the screen */
-            gap: 30px; /* Space between the cards */
+            grid-template-columns: repeat(auto-fill, 280px); 
+            justify-content: center; 
+            gap: 30px; 
             margin-bottom: 50px;
         }
 
-        /* 2. Lock the Card Size and Alignment */
         .card {
-            width: 280px !important; /* Forces the rigid width */
-            height: 340px !important; /* Forces the rigid height */
+            width: 280px !important; 
+            height: 380px !important; 
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centers everything horizontally */
-            justify-content: flex-start; /* Keeps everything locked to the top */
+            align-items: center; 
+            justify-content: flex-start; 
             padding: 30px 15px;
             margin: 0;
             background: #fff;
@@ -32,7 +30,6 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        /* 3. Standardize the Image */
         .member-img {
             width: 160px;
             height: 160px;
@@ -42,6 +39,95 @@
             margin-bottom: 20px;
             background-color: #f4f4f9;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* --- Modal Styles --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.7); 
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 800px; 
+            width: 90%;
+            max-height: 85vh; 
+            overflow-y: auto; 
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #555;
+        }
+        .close-btn:hover { color: #000; }
+        
+        .read-more-btn {
+            margin-top: 15px;
+            padding: 8px 16px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .read-more-btn:hover { background-color: #002244; }
+
+        /* --- PI-Style Layout Inside Modal --- */
+        .modal-content h3 {
+            color: var(--primary-blue, #003366);
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            text-align: left;
+        }
+        .bio-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+            text-align: left;
+        }
+        .bio-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .year-badge {
+            font-weight: bold;
+            color: var(--primary-blue, #003366);
+            flex: 0 0 140px; 
+            margin-right: 20px;
+            line-height: 1.5;
+        }
+        .bio-details {
+            flex: 1;
+            line-height: 1.6;
+        }
+        .bio-details strong {
+            color: #222;
+        }
+        .bio-details em {
+            display: block;
+            margin-top: 5px;
+            color: #555;
+            font-style: normal;
         }
     </style>
 </head>
@@ -64,9 +150,7 @@
         <p>The researchers and scholars driving our innovations in quantum materials.</p>
     </section>
 
-   <div class="container">
-        
-        <!-- NEW SECTION ADDED HERE -->
+    <div class="container">
         <h2 class="section-header">Research Lead & Postdoc</h2>
         <div class="grid-container" id="team-leads"></div>
 
@@ -78,8 +162,12 @@
 
         <h2 class="section-header">Master Students</h2>
         <div class="grid-container" id="team-masters"></div>
-        
     </div>
+
+    <div id="special-modal" class="modal">
+        <div class="modal-content" id="modal-inner-content">
+            <!-- Content Injected Here -->
+        </div>
     </div>
 
     <footer>
@@ -88,45 +176,108 @@
         </div>
     </footer>
 
-    <!-- Script to fetch the Team data from the CMS -->
-   <!-- Script to fetch the Team data from the CMS -->
     <script>
+        let globalTeamData = []; 
+
+        function openModal(index) {
+            const member = globalTeamData[index];
+            
+            let modalHTML = `
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <h2 style="color: #003366; margin-top: 0; font-size: 2rem; text-align: center;">${member.name || ''}</h2>
+                <p style="text-align: center; font-weight: bold; color: #555; margin-top: -10px;">${member.role || ''}</p>
+            `;
+
+            if (member.bio) {
+                const formattedBio = member.bio.split('\n').map(para => `<p style="line-height: 1.6; color: #444;">${para}</p>`).join('');
+                modalHTML += `<h3>Biography</h3>${formattedBio}`;
+            }
+
+            if (member.education && member.education.length > 0) {
+                modalHTML += `<h3>Education & Academic Background</h3><ul class="bio-list">`;
+                member.education.forEach(item => {
+                    let detailsStr = item.details ? `<em>${item.details}</em>` : '';
+                    modalHTML += `<li>
+                        <div class="year-badge">${item.year || ''}</div>
+                        <div class="bio-details"><strong>${item.degree || ''}</strong>, ${item.institution || ''} ${detailsStr}</div>
+                    </li>`;
+                });
+                modalHTML += `</ul>`;
+            }
+
+            if (member.experience && member.experience.length > 0) {
+                modalHTML += `<h3>Professional Experience</h3><ul class="bio-list">`;
+                member.experience.forEach(item => {
+                    modalHTML += `<li>
+                        <div class="year-badge">${item.year || ''}</div>
+                        <div class="bio-details"><strong>${item.title || ''}</strong>, ${item.institution || ''}</div>
+                    </li>`;
+                });
+                modalHTML += `</ul>`;
+            }
+
+            if (member.awards && member.awards.length > 0) {
+                modalHTML += `<h3>Selected Honors & Awards</h3><ul class="bio-list">`;
+                member.awards.forEach(item => {
+                    modalHTML += `<li>
+                        <div class="year-badge">${item.year || ''}</div>
+                        <div class="bio-details"><strong>${item.name || ''}</strong>, ${item.organization || ''}</div>
+                    </li>`;
+                });
+                modalHTML += `</ul>`;
+            }
+
+            document.getElementById('modal-inner-content').innerHTML = modalHTML;
+            document.getElementById('special-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('special-modal').style.display = 'none';
+        }
+        window.onclick = function(event) {
+            let modal = document.getElementById('special-modal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
         fetch('data/team.json')
             .then(response => {
                 if (!response.ok) throw new Error("Team data not found");
                 return response.json();
             })
             .then(data => {
-                // Added a new bucket for the Research Leads
+                if (!data || !data.members) return; 
+                
+                globalTeamData = data.members; 
+
                 let leadHTML = "";
                 let postdocHTML = "";
                 let phdHTML = "";
                 let masterHTML = "";
 
-                // SAFETY CHECK: If the CMS hasn't published any members yet, stop gracefully
-                if (!data || !data.members) {
-                    console.log("No members found in CMS data yet.");
-                    return; 
-                }
-
-                // Loop through every person in the CMS
-                data.members.forEach((member) => {
-                    // SAFETY CHECKS: Fallback text if a field is left blank in the CMS
+                data.members.forEach((member, index) => {
                     const imgPath = member.photo ? member.photo.replace(/^\//, '') : 'placeholder.jpg';
                     const name = member.name ? member.name : "New Lab Member";
                     const role = member.role ? member.role : "Researcher";
                     const category = member.category ? member.category : "Post Doc";
                     
-                    // Build the standard card for the person
+                    // --- EXPLICIT TOGGLE CHECK ---
+                    // Only adds the button if the toggle switch is ON (true)
+                    let extraButton = "";
+                    if (member.enable_popup === true) {
+                        extraButton = `<button class="read-more-btn" onclick="openModal(${index})">Read More</button>`;
+                    }
+                    
                     let card = `
                         <div class="card">
                             <img src="${imgPath}" alt="${name}" class="member-img">
                             <h3 style="margin: 0; color: #003366; font-size: 1.2rem; text-align: center;">${name}</h3>
                             <p style="margin-top: 5px; font-weight: bold; color: #555; font-size: 0.95rem; text-align: center;">${role}</p>
+                            ${extraButton}
                         </div>
                     `;
 
-                    // SORTING LOGIC: Added the new category check
                     if (category === "Research lead and post doc") {
                         leadHTML += card;
                     } else if (category === "Post Doc") {
@@ -138,8 +289,7 @@
                     }
                 });
 
-                // Inject the filled buckets into the matching HTML containers
-                document.getElementById('team-leads').innerHTML = leadHTML; // New injection
+                document.getElementById('team-leads').innerHTML = leadHTML;
                 document.getElementById('team-postdocs').innerHTML = postdocHTML;
                 document.getElementById('team-phds').innerHTML = phdHTML;
                 document.getElementById('team-masters').innerHTML = masterHTML;
@@ -147,7 +297,6 @@
             .catch(error => console.log("Team data hasn't been created in the CMS yet.", error));
     </script>
 
-    <!-- Script to fetch the Global Settings (Font, Color, Group Name) -->
     <script>
         fetch('data/settings.json')
             .then(response => {
@@ -155,7 +304,6 @@
                 return response.json();
             })
             .then(data => {
-                // 1. Update CSS Variables
                 const root = document.documentElement;
                 if(data.font_family) root.style.setProperty('--main-font', data.font_family);
                 if(data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
@@ -163,23 +311,18 @@
                 if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
                 if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
 
-                // 2. Update the Research Group Name Globally
                 if(data.group_name) {
-                    // Update Navigation Logo
                     document.querySelectorAll('.logo').forEach(logo => {
                         logo.innerText = data.group_name;
                     });
                     
-                    // Update Footer Copyright text
                     document.querySelectorAll('footer .footer-bottom p').forEach(footer => {
                         const currentYear = new Date().getFullYear();
                         footer.innerHTML = `&copy; ${currentYear} ${data.group_name}. All rights reserved.`;
                     });
 
-                    // Update Browser Tab Title safely
                     const currentTitle = document.title;
                     if (currentTitle.includes('-')) {
-                        // Keeps page names like "Opportunities -" but swaps the group name
                         const pageName = currentTitle.split('-')[0].trim();
                         document.title = `${pageName} - ${data.group_name}`;
                     } else {
