@@ -11,32 +11,43 @@
             margin-top: 30px;
         }
         .bio-content h3 {
-            color: var(--primary-blue);
+            color: var(--primary-blue, #003366);
             border-bottom: 1px solid #ddd;
             padding-bottom: 5px;
             margin-top: 40px;
+            margin-bottom: 25px;
         }
+        
+        /* New Professional Two-Column Layout for Lists */
         .bio-list {
             list-style-type: none;
             padding-left: 0;
+            margin: 0;
         }
         .bio-list li {
-            margin-bottom: 15px;
-            padding-left: 20px;
-            position: relative;
-        }
-        .bio-list li::before {
-            content: "▪";
-            color: var(--primary-blue);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
+            display: flex; /* Creates the two-column structure */
+            align-items: flex-start; /* Keeps text aligned to the top */
+            margin-bottom: 25px;
         }
         .year-badge {
             font-weight: bold;
-            color: var(--primary-blue);
-            display: inline-block;
-            width: 100px;
+            color: var(--primary-blue, #003366);
+            flex: 0 0 180px; /* Locks the left column to exactly 180px wide */
+            margin-right: 20px;
+            line-height: 1.5;
+        }
+        .bio-details {
+            flex: 1; /* Allows the right column to take up all remaining space */
+            line-height: 1.6;
+        }
+        .bio-details strong {
+            color: #222;
+        }
+        .bio-details em {
+            display: block; /* Pushes extra details (like a thesis title) to a clean new line */
+            margin-top: 6px;
+            color: #555;
+            font-style: normal;
         }
     </style>
 </head>
@@ -140,43 +151,58 @@
                     document.getElementById('pi-photo').src = imgPath;
                 }
 
-                // 2. Update Education List
+                // 2. Update Education List (Now using the 2-column format)
                 if(data.education && data.education.length > 0) {
                     let eduHTML = "";
                     data.education.forEach(item => {
                         let year = item.year ? item.year : "";
                         let degree = item.degree ? item.degree : "";
                         let inst = item.institution ? item.institution : "";
-                        let detailsStr = item.details ? `<br><em>${item.details}</em>` : '';
-                        eduHTML += `<li><span class="year-badge">${year}</span> <strong>${degree}</strong>, ${inst} ${detailsStr}</li>`;
+                        let detailsStr = item.details ? `<em>${item.details}</em>` : '';
+                        
+                        eduHTML += `
+                            <li>
+                                <div class="year-badge">${year}</div>
+                                <div class="bio-details"><strong>${degree}</strong>, ${inst} ${detailsStr}</div>
+                            </li>`;
                     });
                     document.getElementById('pi-education').innerHTML = eduHTML;
                 } else {
                     document.getElementById('pi-education').innerHTML = "<li>No education data published yet.</li>";
                 }
 
-                // 3. Update Experience List
+                // 3. Update Experience List (Now using the 2-column format)
                 if(data.experience && data.experience.length > 0) {
                     let expHTML = "";
                     data.experience.forEach(item => {
                         let year = item.year ? item.year : "";
                         let title = item.title ? item.title : "";
                         let inst = item.institution ? item.institution : "";
-                        expHTML += `<li><span class="year-badge">${year}</span> <strong>${title}</strong>, ${inst}</li>`;
+                        
+                        expHTML += `
+                            <li>
+                                <div class="year-badge">${year}</div>
+                                <div class="bio-details"><strong>${title}</strong>, ${inst}</div>
+                            </li>`;
                     });
                     document.getElementById('pi-experience').innerHTML = expHTML;
                 } else {
                     document.getElementById('pi-experience').innerHTML = "<li>No professional experience published yet.</li>";
                 }
 
-                // 4. Update Awards List
+                // 4. Update Awards List (Now using the 2-column format)
                 if(data.awards && data.awards.length > 0) {
                     let awardsHTML = "";
                     data.awards.forEach(item => {
                         let year = item.year ? item.year : "";
                         let name = item.name ? item.name : "";
                         let org = item.organization ? item.organization : "";
-                        awardsHTML += `<li><span class="year-badge">${year}</span> <strong>${name}</strong>, ${org}</li>`;
+                        
+                        awardsHTML += `
+                            <li>
+                                <div class="year-badge">${year}</div>
+                                <div class="bio-details"><strong>${name}</strong>, ${org}</div>
+                            </li>`;
                     });
                     document.getElementById('pi-awards').innerHTML = awardsHTML;
                 } else {
