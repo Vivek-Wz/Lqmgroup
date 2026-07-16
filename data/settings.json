@@ -1,5 +1,6 @@
 {
   "group_name": "Quantum Photonics and Optoelectronics Devices Group (QPOD Group)",
   "font_family": "'Playfair Display', serif",
-  "text_size": 24
+  "text_size": 24,
+  "header_size": 35
 }
