@@ -148,15 +148,13 @@ footer { background-color: var(--primary-blue); color: white; text-align: center
 }
 
 .subheading-link {
-    font-size: 0.85rem;
-    color: #555;
+    font-size: 1rem; 
+    color: #ffffff; /* Forces the text to be pure white */
     text-decoration: none;
     margin-top: 2px;
     font-weight: 500;
-    transition: color 0.3s ease;
 }
 
 .subheading-link:hover {
-    color: var(--primary-blue, #003366);
-    text-decoration: underline;
+    text-decoration: underline; /* Keeps the underline, removed the opacity fade */
 }
