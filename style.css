@@ -61,7 +61,7 @@ nav ul li a:hover { text-decoration: underline; }
 /* Find your slider image class (it might be named slightly differently) */
 .slide img {
     width: 100%;             /* Forces the image to stretch to the edges */
-    height: 100%;            /* Forces the image to fill the height */
+    height: 50%;            /* Forces the image to fill the height */
     object-fit: cover;       /* Crops the image perfectly to fit the box without squishing it */
     object-position: center; /* Keeps the center of the photo in view */
     
