@@ -140,3 +140,23 @@ footer { background-color: var(--primary-blue); color: white; text-align: center
         transform: translateY(0);
     }
 }
+/* --- Navigation Subheading Styles --- */
+.nav-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.subheading-link {
+    font-size: 0.85rem;
+    color: #555;
+    text-decoration: none;
+    margin-top: 2px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.subheading-link:hover {
+    color: var(--primary-blue, #003366);
+    text-decoration: underline;
+}
