@@ -18,33 +18,33 @@
             margin-bottom: 25px;
         }
         
-        /* New Professional Two-Column Layout for Lists */
+        /* Professional Two-Column Layout for Lists */
         .bio-list {
             list-style-type: none;
             padding-left: 0;
             margin: 0;
         }
         .bio-list li {
-            display: flex; /* Creates the two-column structure */
-            align-items: flex-start; /* Keeps text aligned to the top */
+            display: flex; 
+            align-items: flex-start; 
             margin-bottom: 25px;
         }
         .year-badge {
             font-weight: bold;
             color: var(--primary-blue, #003366);
-            flex: 0 0 180px; /* Locks the left column to exactly 180px wide */
+            flex: 0 0 180px; 
             margin-right: 20px;
             line-height: 1.5;
         }
         .bio-details {
-            flex: 1; /* Allows the right column to take up all remaining space */
+            flex: 1; 
             line-height: 1.6;
         }
         .bio-details strong {
             color: #222;
         }
         .bio-details em {
-            display: block; /* Pushes extra details (like a thesis title) to a clean new line */
+            display: block; 
             margin-top: 6px;
             color: #555;
             font-style: normal;
@@ -55,9 +55,11 @@
 
     <nav>
         <div class="nav-brand">
-        <a href="index.html" class="logo">Quantum Photonic and Optoelectronic Device Group</a>
-        <a href="https://smce.hbut.edu.cn/lqm/index.htm" target="_blank" class="subheading-link">Core Research Group at LQMI</a>
+            <a href="index.html" class="logo">Paul Research Group</a>
+            <!-- Change this link below to the actual LQMI website URL -->
+            <a href="https://your-lqmi-link-here.com" target="_blank" class="subheading-link">Core research group at LQMI</a>
         </div>
+        <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="pi.html">Principal Investigator</a></li>
             <li><a href="team.html">Research Group</a></li>
@@ -83,7 +85,7 @@
                 Wuhan, China</p>
                 <p style="margin-top: 15px;">
                     ✉️ <a id="pi-email" href="mailto:">Loading Email...</a> <br>
-                    🔗 <a href="https://scholar.google.com/citations?user=4H0vVGIAAAAJ&hl=en" target="_blank">Google Scholar Profile</a>
+                    🔗 <a href="#" target="_blank">Google Scholar Profile</a>
                 </p>
             </div>
         </section>
@@ -127,9 +129,9 @@
                 return response.json();
             })
             .then(data => {
-                if (!data) return; // Stop if file is completely empty
+                if (!data) return; 
 
-                // 1. Update Basic Info with Safety Fallbacks
+                // 1. Update Basic Info 
                 document.getElementById('pi-name').innerText = data.name ? data.name : "Principal Investigator";
                 document.getElementById('pi-title').innerText = data.title ? data.title : "Lead Researcher";
                 
@@ -153,7 +155,7 @@
                     document.getElementById('pi-photo').src = imgPath;
                 }
 
-                // 2. Update Education List (Now using the 2-column format)
+                // 2. Update Education List 
                 if(data.education && data.education.length > 0) {
                     let eduHTML = "";
                     data.education.forEach(item => {
@@ -173,7 +175,7 @@
                     document.getElementById('pi-education').innerHTML = "<li>No education data published yet.</li>";
                 }
 
-                // 3. Update Experience List (Now using the 2-column format)
+                // 3. Update Experience List 
                 if(data.experience && data.experience.length > 0) {
                     let expHTML = "";
                     data.experience.forEach(item => {
@@ -192,7 +194,7 @@
                     document.getElementById('pi-experience').innerHTML = "<li>No professional experience published yet.</li>";
                 }
 
-                // 4. Update Awards List (Now using the 2-column format)
+                // 4. Update Awards List 
                 if(data.awards && data.awards.length > 0) {
                     let awardsHTML = "";
                     data.awards.forEach(item => {
@@ -222,7 +224,6 @@
                 return response.json();
             })
             .then(data => {
-                // 1. Update CSS Variables
                 const root = document.documentElement;
                 if(data.font_family) root.style.setProperty('--main-font', data.font_family);
                 if(data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
@@ -230,7 +231,6 @@
                 if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
                 if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
 
-                // 2. Update the Research Group Name Globally
                 if(data.group_name) {
                     document.querySelectorAll('.logo').forEach(logo => {
                         logo.innerText = data.group_name;
