@@ -53,7 +53,23 @@ nav ul li a:hover { text-decoration: underline; }
 /* --- Slider Styling (Added Back!) --- */
 .slider-container { width: 100%; height: 60vh; position: relative; margin: auto; overflow: hidden; background-color: #000; }
 .slide { display: none; width: 100%; height: 100%; }
-.slide img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+/* Find your slider image class (it might be named slightly differently) */
+.slide img {
+    width: 100%;             /* Forces the image to stretch to the edges */
+    height: 100%;            /* Forces the image to fill the height */
+    object-fit: cover;       /* Crops the image perfectly to fit the box without squishing it */
+    object-position: center; /* Keeps the center of the photo in view */
+    
+    /* If there is a brightness filter making it dull, remove it or set it to 100% */
+    filter: brightness(100%); 
+}
+
+/* If you have a dark overlay class (often named .overlay or similar) */
+.slider-overlay {
+    /* If the background is too dark, change the last number (opacity). 
+       0.5 is half-dark, 0.2 is very light, and 0.0 is completely invisible! */
+    background: rgba(0, 0, 0, 0.2); 
+}
 .slide-text { color: #f2f2f2; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 80%; }
 .prev, .next { cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); padding: 20px; color: white; font-weight: bold; font-size: 30px; background-color: rgba(0,0,0,0.2); }
 .next { right: 10px; } .prev { left: 10px; }
