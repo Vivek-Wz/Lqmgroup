@@ -93,11 +93,20 @@ nav ul li a:hover {
 }
 
 /* --- Slider Styling --- */
+/* --- Slider Styling --- */
 .slider-container {
-    width: 100%;
+    width: 95%;              /* Shrunk slightly from 100% so it acts like a box inside the page */
     max-width: 1200px;
-    aspect-ratio: 21 / 9; /* Creates a responsive wide-screen box */
-    margin: 0 auto;
+    aspect-ratio: 21 / 9; 
+    
+    /* 1. VERTICAL CENTERING: Adds 60px of space above and below the slider */
+    margin: 60px auto;       
+    
+    /* 2. BOX CONTAINER EFFECTS */
+    border-radius: 12px;     /* Gives the box smooth, rounded corners */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Adds a soft, professional drop shadow */
+    border: 1px solid #eaeaea; /* Adds a very subtle outline */
+    
     overflow: hidden; 
     position: relative;
     background-color: #000;
