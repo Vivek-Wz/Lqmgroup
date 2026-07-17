@@ -75,6 +75,7 @@ collections:
           - {label: "Academic Title", name: "title", widget: "string", required: false}
           - {label: "Biography", name: "bio", widget: "text", required: false}
           - {label: "Email", name: "email", widget: "string", required: false}
+          - {label: "Google Scholar Link", name: "google_scholar", widget: "string", required: false}
           - {label: "Profile Photo", name: "photo", widget: "image", required: false}
           - label: "Education & Academic Background"
             name: "education"
