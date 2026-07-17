@@ -2,5 +2,7 @@
   "group_name": "Quantum Photonics and Optoelectronics Devices Group (QPOD Group)",
   "font_family": "'Playfair Display', serif",
   "text_size": 24,
-  "header_size": 35
+  "header_size": 35,
+  "nav_subheading": "A Core Research Group @ LQMI",
+  "nav_subheading_link": "https://smce.hbut.edu.cn/lqm/index.htm"
 }
