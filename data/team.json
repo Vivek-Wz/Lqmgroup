@@ -10,7 +10,7 @@
       "name": "Dr.Ashok Mondal",
       "role": "Lead Researcher",
       "category": "Research lead and post doc",
-      "photo": "/images/weixin-image_20260714152800_140_3.jpg"
+      "photo": "/images/weixin-image_20260717100723_142_3.jpg"
     },
     {
       "name": "Huawei Lou",
@@ -35,6 +35,9 @@
       "role": "PI : Ashok Mondal",
       "photo": "/images/weixin-image_20260714164321_25_21.jpg",
       "category": "Master Student"
+    },
+    {
+      "enable_popup": false
     }
   ]
 }
