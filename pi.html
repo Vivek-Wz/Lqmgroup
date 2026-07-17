@@ -217,7 +217,7 @@
     </script>
 
     <!-- Script to fetch the Global Settings (Font, Color, Group Name) -->
-    <script>
+   <script>
         fetch('data/settings.json')
             .then(response => {
                 if (!response.ok) throw new Error("Settings not found.");
@@ -231,6 +231,7 @@
                 if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
                 if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
 
+                // --- 1. Main Group Name ---
                 if(data.group_name) {
                     document.querySelectorAll('.logo').forEach(logo => {
                         logo.innerText = data.group_name;
@@ -248,6 +249,20 @@
                     } else {
                         document.title = data.group_name;
                     }
+                }
+
+                // --- 2. NEW: Navigation Subheading Text ---
+                if(data.nav_subheading) {
+                    document.querySelectorAll('.subheading-link').forEach(link => {
+                        link.innerText = data.nav_subheading;
+                    });
+                }
+
+                // --- 3. NEW: Navigation Subheading Link ---
+                if(data.nav_subheading_link) {
+                    document.querySelectorAll('.subheading-link').forEach(link => {
+                        link.href = data.nav_subheading_link;
+                    });
                 }
             })
             .catch(error => console.log("Global settings not yet published.", error));
