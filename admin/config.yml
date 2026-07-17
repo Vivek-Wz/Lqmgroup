@@ -20,7 +20,8 @@ collections:
           - {label: "Body Text Color", name: "text_color", widget: "color", default: "#333333", required: false}
           - {label: "Primary Header Size (px)", name: "header_size", widget: "number", value_type: "int", default: 32, min: 20, max: 60, required: false}
           - {label: "Main Container Width (px)", name: "container_width", widget: "number", value_type: "int", default: 1100, step: 50, required: false}
-
+          - {label: "Subheading Text", name: "nav_subheading", widget: "string", default: "Core research group at LQMI", required: false}
+          - {label: "Subheading Link", name: "nav_subheading_link", widget: "string", default: "https://lqmi.hubu.edu.cn", required: false}
       # 2. Homepage (Slider)
       - label: "Homepage Settings"
         name: "home"
