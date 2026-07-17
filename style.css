@@ -97,7 +97,7 @@ nav ul li a:hover {
 .slider-container {
     width: 95%;              /* Shrunk slightly from 100% so it acts like a box inside the page */
     max-width: 1200px;
-    aspect-ratio: 21 / 9; 
+    aspect-ratio: 16/ 9; 
     
     /* 1. VERTICAL CENTERING: Adds 60px of space above and below the slider */
     margin: 60px auto;       
