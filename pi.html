@@ -6,48 +6,94 @@
     <title>Principal Investigator - Paul Research Group</title>
     <link rel="stylesheet" href="style.css"> 
     <style>
-        /* Specific layout tweaks just for the PI bio page */
-        .bio-content {
-            margin-top: 30px;
+        /* --- Professional PI Card Layout --- */
+        .pi-section {
+            display: flex;
+            flex-direction: row; /* Puts image and text side-by-side */
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+            border-radius: 16px; /* Smooth rounded corners for the card */
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Soft, professional drop shadow */
+            gap: 50px; /* Clean spacing between the photo and the text */
+            margin-bottom: 50px;
         }
-        .bio-content h3 {
+
+        .pi-image {
+            width: 240px !important;
+            height: 240px !important;
+            border-radius: 12px; /* Rounds the corners of the photo itself */
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            flex-shrink: 0; /* Prevents the image from squishing */
+        }
+
+        .pi-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .pi-info h2 {
+            margin: 0 0 5px 0 !important;
             color: var(--primary-blue, #003366);
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            margin-top: 40px;
-            margin-bottom: 25px;
+            font-size: 2.2rem !important;
+            border-bottom: none; /* Removes any default bottom borders */
+            padding-bottom: 0;
         }
-        
-        /* Professional Two-Column Layout for Lists */
-        .bio-list {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 0;
+
+        .pi-info h3 {
+            margin: 0 0 20px 0 !important;
+            color: #666;
+            font-weight: 600;
+            font-size: 1.1rem !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .bio-list li {
-            display: flex; 
-            align-items: flex-start; 
-            margin-bottom: 25px;
-        }
-        .year-badge {
-            font-weight: bold;
-            color: var(--primary-blue, #003366);
-            flex: 0 0 180px; 
-            margin-right: 20px;
-            line-height: 1.5;
-        }
-        .bio-details {
-            flex: 1; 
+
+        .pi-info p {
+            margin: 0 0 5px 0;
+            color: #444;
             line-height: 1.6;
+            font-size: 1.05rem;
         }
-        .bio-details strong {
-            color: #222;
+
+        .pi-contact {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee; /* Adds a neat separator line above contact info */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-        .bio-details em {
-            display: block; 
-            margin-top: 6px;
-            color: #555;
-            font-style: normal;
+
+        .pi-contact a {
+            color: var(--primary-blue, #003366);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .pi-contact a:hover {
+            color: #00509e;
+            text-decoration: underline;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            .pi-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+                gap: 25px;
+            }
+            .pi-contact {
+                align-items: center;
+            }
         }
     </style>
 </head>
