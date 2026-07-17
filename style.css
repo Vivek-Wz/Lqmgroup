@@ -1,139 +1,236 @@
 /* --- Clean, academic color palette --- */
-/* --- 1. DEFAULT VARIABLES (Fallback if CMS fails) --- */
+/* --- 1. DEFAULT VARIABLES --- */
 :root {
     --main-font: 'Inter', -apple-system, sans-serif;
     --text-size: 16px;
     --text-color: #333333;
+    --text-dark: #333;
     --header-size: 32px;
     --container-width: 1100px;
+    --primary-blue: #003366;
+    --light-gray: #f4f4f9;
 }
 
 /* --- 2. APPLY VARIABLES GLOBALLY --- */
 body {
-    font-family: var(--main-font);
+    font-family: var(--main-font), 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: var(--text-size);
     color: var(--text-color);
-}
-
-h1, h2, h3, .section-header {
-    font-size: var(--header-size);
-}
-
-.container {
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 20px;
-}
-:root {
-    --primary-blue: #003366;
-    --light-gray: #f4f4f9;
-    --text-dark: #333;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    color: var(--text-dark);
     background-color: #fdfbf7; 
     background-image: 
         radial-gradient(circle at 0% 20%, rgba(254, 243, 199, 0.4) 0%, transparent 40%),
         radial-gradient(circle at 100% 80%, rgba(224, 242, 254, 0.4) 0%, transparent 40%);
     background-attachment: fixed;
 }
-  
-/* --- Navigation --- */
-nav { background-color: var(--primary-blue); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
-nav .logo { color: white; font-size: 1.2rem; font-weight: bold; text-decoration: none; }
-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
-nav ul li a { color: white; text-decoration: none; font-size: 0.95rem; }
-nav ul li a:hover { text-decoration: underline; }
 
-/* --- Slider Styling (Added Back!) --- */
-.slider-container (or .hero, .carousel, etc.) {
-    width: 100%;
-    height: 50px; /* Adjust this number to make your slider taller or shorter */
-    overflow: hidden; /* Hides any part of the image that spills over the edge */
-    position: relative;
+h1, h2, h3, .section-header {
+    font-size: var(--header-size);
 }
-.slide { display: none; width: 100%; height: 100%; }
-/* Find your slider image class (it might be named slightly differently) */
-.slide img {
-    width: 100%;             /* Forces the image to stretch to the edges */
-    height: 50%;            /* Forces the image to fill the height */
-    object-fit: cover;       /* Crops the image perfectly to fit the box without squishing it */
-    object-position: center; /* Keeps the center of the photo in view */
-    
-    /* If there is a brightness filter making it dull, remove it or set it to 100% */
-    filter: brightness(100%); 
-}
-
-/* If you have a dark overlay class (often named .overlay or similar) */
-.slider-overlay {
-    /* If the background is too dark, change the last number (opacity). 
-       0.5 is half-dark, 0.2 is very light, and 0.0 is completely invisible! */
-    background: rgba(0, 0, 0, 0.2); 
-}
-.slide-text { color: #f2f2f2; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 80%; }
-.prev, .next { cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); padding: 20px; color: white; font-weight: bold; font-size: 30px; background-color: rgba(0,0,0,0.2); }
-.next { right: 10px; } .prev { left: 10px; }
 
 /* --- Container Alignment --- */
-.container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
-.section-header { color: var(--primary-blue); border-bottom: 2px solid var(--primary-blue); padding-bottom: 10px; margin-top: 50px; }
+.container {
+    width: 95%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.section-header { 
+    color: var(--primary-blue); 
+    border-bottom: 2px solid var(--primary-blue); 
+    padding-bottom: 10px; 
+    margin-top: 50px; 
+}
+
+/* --- Navigation --- */
+nav { 
+    background-color: var(--primary-blue); 
+    padding: 15px 5%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+nav .logo { 
+    color: white; 
+    font-size: 1.2rem; 
+    font-weight: bold; 
+    text-decoration: none; 
+}
+nav ul { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+    gap: 20px; 
+}
+nav ul li a { 
+    color: white; 
+    text-decoration: none; 
+    font-size: 0.95rem; 
+}
+nav ul li a:hover { 
+    text-decoration: underline; 
+}
+
+/* --- Navigation Subheading Styles --- */
+.nav-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.subheading-link {
+    font-size: 1rem; 
+    color: #ffffff; 
+    text-decoration: none;
+    margin-top: 2px;
+    font-weight: 500;
+}
+.subheading-link:hover {
+    text-decoration: underline; 
+}
+
+/* --- Slider Styling --- */
+.slider-container {
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 21 / 9; /* Creates a responsive wide-screen box */
+    margin: 0 auto;
+    overflow: hidden; 
+    position: relative;
+    background-color: #000;
+}
+.slide { 
+    display: none; 
+    width: 100%; 
+    height: 100%; 
+}
+.slide img {
+    width: 100%;             
+    height: 100%;            
+    object-fit: cover;       
+    object-position: center; 
+    display: block;
+    filter: brightness(100%); 
+}
+.slider-overlay {
+    background: rgba(0, 0, 0, 0.2); 
+}
+.slide-text { 
+    color: #f2f2f2; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    text-align: center; 
+    width: 80%; 
+}
+.prev, .next { 
+    cursor: pointer; 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    padding: 20px; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 30px; 
+    background-color: rgba(0,0,0,0.2); 
+}
+.next { right: 10px; } 
+.prev { left: 10px; }
 
 /* --- Grid Layout --- */
-.grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 30px; }
-.card { background: white; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+.grid-container { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 30px; 
+    margin-top: 30px; 
+}
+.card { 
+    background: white; 
+    border: 1px solid #e0e0e0; 
+    padding: 25px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+    display: flex; 
+    flex-direction: column; 
+}
 
 /* --- News Scroller --- */
-.news-scroller { width: 95%; max-width: 1400px; margin: 40px auto; overflow: hidden; padding: 10px 0; }
-.news-track { display: flex; width: max-content; animation: scrollLeft 30s linear infinite; }
-.news-track:hover { animation-play-state: paused; }
-.news-card { width: 320px; margin-right: 30px; background: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
-.news-card img { width: 100%; height: 180px; object-fit: cover; }
-.news-content { padding: 15px; }
+.news-scroller { 
+    width: 95%; 
+    max-width: 1400px; 
+    margin: 40px auto; 
+    overflow: hidden; 
+    padding: 10px 0; 
+}
+.news-track { 
+    display: flex; 
+    width: max-content; 
+    animation: scrollLeft 30s linear infinite; 
+}
+.news-track:hover { 
+    animation-play-state: paused; 
+}
+.news-card { 
+    width: 320px; 
+    margin-right: 30px; 
+    background: white; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    flex-shrink: 0; 
+}
+.news-card img { 
+    width: 100%; 
+    height: 180px; 
+    object-fit: cover; 
+}
+.news-content { 
+    padding: 15px; 
+}
 
 /* --- Footer --- */
-footer { background-color: var(--primary-blue); color: white; text-align: center; padding: 30px; margin-top: 60px; }
+footer { 
+    background-color: var(--primary-blue); 
+    color: white; 
+    text-align: center; 
+    padding: 30px; 
+    margin-top: 60px; 
+}
 
 /* --- Animations --- */
-@keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-/* --- Mobile --- */
-@media (max-width: 768px) {
-    nav { flex-direction: column; }
-    .grid-container { grid-template-columns: 1fr; }
-    .container { width: 90%; }
-    .slider-container { height: 40vh; }
+@keyframes scrollLeft { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(-50%); } 
 }
+
 /* --- RESEARCH MODAL STYLES --- */
 .modal {
-    display: none; /* Hidden by default */
+    display: none; 
     position: fixed; 
-    z-index: 9999; /* Sit on top of everything */
+    z-index: 9999; 
     left: 0;
     top: 0;
     width: 100%; 
     height: 100%; 
-    background-color: rgba(0, 30, 60, 0.7); /* Deep blue overlay */
-    backdrop-filter: blur(4px); /* Modern frosted glass effect */
-    overflow-y: auto; /* Allow scrolling inside the modal if text is very long */
+    background-color: rgba(0, 30, 60, 0.7); 
+    backdrop-filter: blur(4px); 
+    overflow-y: auto; 
 }
-
 .modal-content {
     background-color: #ffffff;
-    margin: 5% auto; /* 5% from the top and centered */
+    margin: 5% auto; 
     padding: 40px;
     border-radius: 12px;
     width: 90%;
-    max-width: 800px; /* Restrict width for optimal reading */
+    max-width: 800px; 
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     position: relative;
     animation: modalFadeIn 0.3s ease-out forwards;
 }
-
 .close-btn {
     color: #999;
     position: absolute;
@@ -145,12 +242,9 @@ footer { background-color: var(--primary-blue); color: white; text-align: center
     transition: color 0.2s;
     line-height: 1;
 }
-
 .close-btn:hover {
-    color: #cc0000; /* Turns red on hover */
+    color: #cc0000; 
 }
-
-/* Smooth pop-up animation */
 @keyframes modalFadeIn {
     from {
         opacity: 0;
@@ -161,21 +255,11 @@ footer { background-color: var(--primary-blue); color: white; text-align: center
         transform: translateY(0);
     }
 }
-/* --- Navigation Subheading Styles --- */
-.nav-brand {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
 
-.subheading-link {
-    font-size: 1rem; 
-    color: #ffffff; /* Forces the text to be pure white */
-    text-decoration: none;
-    margin-top: 2px;
-    font-weight: 500;
-}
-
-.subheading-link:hover {
-    text-decoration: underline; /* Keeps the underline, removed the opacity fade */
+/* --- Mobile --- */
+@media (max-width: 768px) {
+    nav { flex-direction: column; }
+    .grid-container { grid-template-columns: 1fr; }
+    .container { width: 90%; }
+    /* The slider height is now automatically handled by aspect-ratio! */
 }
