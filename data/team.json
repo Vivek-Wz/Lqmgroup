@@ -7,10 +7,56 @@
       "role": "    2026-Present"
     },
     {
+      "bio": "Dr.Ashok Mondal is a Postdoctoral researcher at the Institute of Low-Dimensional Quantum Materials, Hubei University of Technology, China. His research focuses on Strong light-matter interaction in van der Waals (vdW) materials, Bose-Einstein condensation, Cavity Quantum Electrodynamics, and 2D device physics.\nHe received his PhD from the Center for Integrated Nanostructure Physics, Institute for Basic Science (IBS), Sungkyunkwan University (SKKU) under the guidance of Prof. Young Hee Lee. His work has been published in journals including Nature Nanotechnology, Nature Review Physics, Science Advances, Advanced Materials, ACS Nano, and Springer Nature.",
+      "education": [
+        {
+          "year": "2019.03 – 2023.12      ",
+          "degree": "Doctor of Philosophy (Ph.D.) in Physics",
+          "institution": "Sungkyunkwan University (SKKU)                                    South Korea, Department of Energy Science (DOES)                                   Center for Integrated Nanostructure Physics, Institute for Basic Science (IBS)                                   Adviser: Prof. Young Hee Lee",
+          "details": "                                  Thesis title: Polaritonics in 2D van der Waals layered TMDs: Ideal contact                                   resistance and gate tunability "
+        },
+        {
+          "year": "2014 – 2016             ",
+          "degree": "Master of Science (M.Sc.) in physics",
+          "institution": "Indian Institute of Technology                                  (Indian School of Mines), IIT (ISM) Dhanbad, India",
+          "details": "                                 Thesis title: Upconversion Emission & Temperature sensing study in Er3+&                                   Yb3+doped Barium Lanthanum Molybdate Phosphor                                  Adviser: Prof. Kaushal Kumar"
+        }
+      ],
+      "experience": [
+        {
+          "year": "2024 ~ Present         ",
+          "title": "Post-Doctorate",
+          "institution": "Center for Integrated Nanostructure Physics, Institute for Basic                                    Science (IBS), Sungkyunkwan University (SKKU), South Korea                                   Institute of low-dimensional quantum materials, Hubei University ofTechnology,                                   China, Adviser: Prof. Young Hee Lee"
+        },
+        {
+          "year": "2017.05 – 2019.02   ",
+          "title": "Junior Research Fellow (JRF)",
+          "institution": "Indian Institute of Technology (BHU) Varanasi, India                                  Department: School of Materials Science and Technology"
+        }
+      ],
       "name": "Dr.Ashok Mondal",
+      "enable_popup": true,
+      "photo": "/images/weixin-image_20260717100723_142_3.jpg",
       "role": "Lead Researcher",
-      "category": "Research lead and post doc",
-      "photo": "/images/weixin-image_20260717100723_142_3.jpg"
+      "awards": [
+        {
+          "year": "2025",
+          "name": "European Commission Horizon Europe (HORIZON-MSCA-2025-PF-01-01 University of Cambridge) Seal of Excellence."
+        },
+        {
+          "year": "2024",
+          "name": "•\tReceived the ACS Nano Symposium Best Poster Award from the Editor-in-Chief of ACS Nano at Sungkyunkwan University, South Korea, in July 2024."
+        },
+        {
+          "year": "2024",
+          "name": "•\tReceived the Outstanding Research Achievement Award (Grand Prize) at the BK21 Four Department of Energy Science (DOES) Thesis Competition, Sungkyunkwan University"
+        },
+        {
+          "year": "2023",
+          "name": "•\tReceived the Best Poster Award at the A3 Symposium on Emerging Materials: Nanomaterials for Electronics, Energy, and Environment, held in South Korea from October 29 to November 1, 2023."
+        }
+      ],
+      "category": "Research lead and post doc"
     },
     {
       "name": "Huawei Lou",
