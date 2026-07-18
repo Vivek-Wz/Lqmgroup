@@ -133,11 +133,18 @@
 </head>
 <body>
 
-    <nav>
-       <div class="nav-brand">
-        <a href="index.html" class="logo">Quantum Photonic and Optoelectronic Device Group</a>
-        <a href="https://smce.hbut.edu.cn/lqm/index.htm" target="_blank" class="subheading-link">Core Research Group at LQMI</a>
+   <nav>
+        <!-- NEW: Wraps the logo and text together side-by-side -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <!-- Hidden by default until the script finds a logo in the CMS -->
+            <img id="global-nav-logo" src="" alt="Group Logo" style="display: none; max-height: 55px; width: auto; object-fit: contain;">
+            
+            <div class="nav-brand">
+                <a href="index.html" class="logo">Quantum Photonic and Optoelectronic Device Group</a>
+                <a href="https://smce.hbut.edu.cn/lqm/index.htm" target="_blank" class="subheading-link">Core Research Group at LQMI</a>
+            </div>
         </div>
+
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="pi.html">Principal Investigator</a></li>
@@ -345,6 +352,16 @@
                 if(data.nav_subheading_link) {
                     document.querySelectorAll('.subheading-link').forEach(link => {
                         link.href = data.nav_subheading_link;
+                    });
+                }
+
+                // --- 4. NEW: Header Logo ---
+                if(data.header_logo) {
+                    document.querySelectorAll('#global-nav-logo').forEach(img => {
+                        // Cleans the image path and applies it to the src
+                        img.src = data.header_logo.replace(/^\//, '');
+                        // Unhides the image so it appears on the page
+                        img.style.display = "block"; 
                     });
                 }
             })
