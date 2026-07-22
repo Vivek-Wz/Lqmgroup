@@ -267,9 +267,13 @@
                 let masterHTML = "";
 
                 data.members.forEach((member, index) => {
+                   data.members.forEach((member, index) => {
                     const imgPath = member.photo ? member.photo.replace(/^\//, '') : 'placeholder.jpg';
                     const name = member.name ? member.name : "New Lab Member";
-                    const role = member.role ? member.role : "Researcher";
+                    
+                    // NEW: Converts dashboard line breaks into HTML line breaks for the card
+                    const role = member.role ? member.role.replace(/\n/g, '<br>') : "Researcher";
+                    
                     const category = member.category ? member.category : "Post Doc";
                     
                     // --- EXPLICIT TOGGLE CHECK ---
