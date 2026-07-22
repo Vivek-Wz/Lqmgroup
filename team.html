@@ -14,9 +14,13 @@
             margin-bottom: 50px;
         }
 
-        .card {
+       .card {
             width: 280px !important; 
-            height: 380px !important; 
+            
+            /* NEW: Replaced rigid height with flexible height */
+            min-height: 380px !important; 
+            height: auto !important;      
+            
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
