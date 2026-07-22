@@ -8,16 +8,20 @@
     <style>
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, 280px); 
+            /* NEW: Changed from a strict 280px to a flexible minmax rule */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             justify-content: center; 
             gap: 30px; 
             margin-bottom: 50px;
         }
 
-       .card {
-            width: 280px !important; 
+        .card {
+            /* NEW: Flexible Width */
+            min-width: 280px !important; 
+            width: 100% !important;       /* Tells it to fill the flexible grid column */
+            max-width: 350px !important;  /* Stops it from getting too wide on giant screens */
             
-            /* NEW: Replaced rigid height with flexible height */
+            /* Flexible Height */
             min-height: 380px !important; 
             height: auto !important;      
             
@@ -27,13 +31,12 @@
             align-items: center; 
             justify-content: flex-start; 
             padding: 30px 15px;
-            margin: 0;
+            margin: 0 auto;               /* Keeps the card perfectly centered in its space */
             background: #fff;
             border: 1px solid #eaeaea;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-
         .member-img {
             width: 160px;
             height: 160px;
