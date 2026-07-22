@@ -57,9 +57,14 @@
         <div class="news-track" id="dynamic-news"></div>
     </div>
 
-    <!-- Footer -->
+    <<!-- Footer -->
     <footer>
-        <div class="footer-bottom">
+        <!-- NEW: Office Address Container -->
+        <div id="global-footer-address" style="margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; display: none;">
+            <!-- JavaScript will inject the address here -->
+        </div>
+
+        <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
             <p>&copy; 2026 Dr. Kamal Kumar Paul Research Group. All rights reserved.</p>
         </div>
     </footer>
@@ -321,6 +326,13 @@
                         img.src = data.header_logo.replace(/^\//, '');
                         // Unhides the image so it appears on the page
                         img.style.display = "block"; 
+                    });
+               // --- 5. NEW: Footer Office Address ---
+                if(data.footer_address) {
+                    document.querySelectorAll('#global-footer-address').forEach(addr => {
+                        // The .replace rule ensures that if you hit "Enter" in the CMS to create a new line, it translates properly to HTML!
+                        addr.innerHTML = "📍 " + data.footer_address.replace(/\n/g, '<br>');
+                        addr.style.display = "block";
                     });
                 }
             })
