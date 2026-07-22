@@ -57,7 +57,7 @@
         <div class="news-track" id="dynamic-news"></div>
     </div>
 
-    <<!-- Footer -->
+    <!-- Footer -->
     <footer>
         <!-- NEW: Office Address Container -->
         <div id="global-footer-address" style="margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; display: none;">
@@ -243,47 +243,13 @@
             .then(data => {
                 const root = document.documentElement;
                 
+                // Inject the CMS values directly into the CSS variables
                 if(data.font_family) root.style.setProperty('--main-font', data.font_family);
                 if(data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
                 if(data.text_color) root.style.setProperty('--text-color', data.text_color);
                 if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
                 if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
                 
-                if(data.group_name) {
-                    document.querySelectorAll('.logo').forEach(logo => {
-                        logo.innerText = data.group_name;
-                    });
-                    
-                    document.querySelectorAll('footer .footer-bottom p').forEach(footer => {
-                        const currentYear = new Date().getFullYear();
-                        footer.innerHTML = `&copy; ${currentYear} ${data.group_name}. All rights reserved.`;
-                    });
-
-                    const currentTitle = document.title;
-                    if (currentTitle.includes('-')) {
-                        const pageName = currentTitle.split('-')[0].trim();
-                        document.title = `${pageName} - ${data.group_name}`;
-                    } else {
-                        document.title = data.group_name;
-                    }
-                }
-            })
-            .catch(error => console.log("Global settings not yet published.", error));
-    </script>
-<script>
-        fetch('data/settings.json')
-            .then(response => {
-                if (!response.ok) throw new Error("Settings not found.");
-                return response.json();
-            })
-            .then(data => {
-                const root = document.documentElement;
-                if(data.font_family) root.style.setProperty('--main-font', data.font_family);
-                if(data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
-                if(data.text_color) root.style.setProperty('--text-color', data.text_color);
-                if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
-                if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
-
                 // --- 1. Main Group Name ---
                 if(data.group_name) {
                     document.querySelectorAll('.logo').forEach(logo => {
@@ -304,7 +270,6 @@
                     }
                 }
 
-                // --- 2. NEW: Navigation Subheading Text ---
                 // --- 2. NEW: Navigation Subheading Text ---
                 if(data.nav_subheading) {
                     document.querySelectorAll('.subheading-link').forEach(link => {
@@ -327,7 +292,9 @@
                         // Unhides the image so it appears on the page
                         img.style.display = "block"; 
                     });
-               // --- 5. NEW: Footer Office Address ---
+                } // <--- THIS WAS THE MISSING BRACKET!
+
+                // --- 5. NEW: Footer Office Address ---
                 if(data.footer_address) {
                     document.querySelectorAll('#global-footer-address').forEach(addr => {
                         // The .replace rule ensures that if you hit "Enter" in the CMS to create a new line, it translates properly to HTML!
