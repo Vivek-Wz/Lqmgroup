@@ -1,8 +1,5 @@
 {
-  "photo": "/images/weixin-image_20260717100826_143_3.jpg",
-  "email": "paulkamal@hbut.edu.cn",
-  "title": "Professor",
-  "name": " Dr. Kamal Kumar Paul",
+  "google_scholar": "Google Scholar: https://scholar.google.com/citations?user=4H0vVGIAAAAJ&hl=en; ORCID: https://orcid.org/my-orcid?orcid=0000-0002-4119-0379",
   "bio": "Dr. Kamal Kumar Paul is a Distinguished Professor at the Institute of Low-Dimensional Quantum Materials, Hubei University of Technology, China. His research focuses on quantum photovoltaics, two-dimensional van der Waals materials, hot-carrier solar cells, carrier multiplication, interface engineering, and optoelectronic devices.\n\nBefore joining HBUT, he was a Marie Skłodowska-Curie Postdoctoral Fellow at the University of Cambridge and previously worked at the Institute for Basic Science and Sungkyunkwan University, South Korea. He received his PhD from IIT Guwahati. His work has been published in journals including Nature Reviews Physics, Science Advances, Advanced Materials, and ACS Nano.",
   "education": [
     {
@@ -40,6 +37,8 @@
       "institution": "Center for Integrated Nanostructure Physics (CINAP), Sungkyunkwan University, South Korea"
     }
   ],
+  "name": " Dr. Kamal Kumar Paul",
+  "photo": "/images/weixin-image_20260717100826_143_3.jpg",
   "awards": [
     {
       "year": "2023",
@@ -66,5 +65,7 @@
       "name": "Best Poster Award",
       "organization": "International Conference on Nanoscience, Nanotechnology and Advanced Materials”, (NANOS) Gitam University, Vizag, India"
     }
-  ]
+  ],
+  "title": "Professor",
+  "email": "paulkamal@hbut.edu.cn"
 }
