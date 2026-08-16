@@ -9,24 +9,24 @@
         /* --- Professional PI Card Layout --- */
         .pi-section {
             display: flex;
-            flex-direction: row; /* Puts image and text side-by-side */
+            flex-direction: row; 
             align-items: center;
             background-color: #ffffff;
             border: 1px solid #eaeaea;
-            border-radius: 16px; /* Smooth rounded corners for the card */
+            border-radius: 16px; 
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Soft, professional drop shadow */
-            gap: 50px; /* Clean spacing between the photo and the text */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); 
+            gap: 50px; 
             margin-bottom: 50px;
         }
 
         .pi-image {
             width: 240px !important;
             height: 240px !important;
-            border-radius: 12px; /* Rounds the corners of the photo itself */
+            border-radius: 12px; 
             object-fit: cover;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            flex-shrink: 0; /* Prevents the image from squishing */
+            flex-shrink: 0; 
         }
 
         .pi-info {
@@ -40,7 +40,7 @@
             margin: 0 0 5px 0 !important;
             color: var(--primary-blue, #003366);
             font-size: 2.2rem !important;
-            border-bottom: none; /* Removes any default bottom borders */
+            border-bottom: none; 
             padding-bottom: 0;
         }
 
@@ -63,7 +63,7 @@
         .pi-contact {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 1px solid #eee; /* Adds a neat separator line above contact info */
+            border-top: 1px solid #eee; 
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -100,15 +100,15 @@
 <body>
 
     <nav>
-        <!-- NEW: Wraps the logo and text together side-by-side -->
         <div style="display: flex; align-items: center; gap: 15px;">
-            <!-- Hidden by default until the script finds a logo in the CMS -->
             <img id="global-nav-logo" src="" alt="Group Logo" style="display: none; max-height: 55px; width: auto; object-fit: contain;">
             
             <div class="nav-brand">
-                <a href="index.html" class="logo">Quantum Photonic and Optoelectronic Device Group
-                </a>
-                <a href="https://smce.hbut.edu.cn/lqm/index.htm" target="_blank" class="subheading-link">Core Research Group at LQMI</a>
+                <a href="index.html" class="logo">Quantum Photonic and Optoelectronic Device Group</a>
+                <!-- Updated Subheading Wrapper -->
+                <div class="subheading-wrapper" style="font-size: 1rem; color: #ffffff; margin-top: 2px; font-weight: 500;">
+                    Core Research Group at LQMI
+                </div>
             </div>
         </div>
 
@@ -136,10 +136,11 @@
                 <p><strong>Institute of Low-Dimensional Quantum Materials</strong><br>
                 Hubei University of Technology<br>
                 Wuhan, China</p>
-                <p style="margin-top: 15px;">
-                    ✉️ <a id="pi-email" href="mailto:">Loading Email...</a> <br>
-                    <a id="pi-scholar" href="#" target="_blank">🔗 Google Scholar Profile</a>
-                </p>
+                <div class="pi-contact">
+                    <a id="pi-email" href="mailto:">✉️ Loading Email...</a>
+                    <!-- Scholar Link (Hidden by default) -->
+                    <a id="pi-scholar" href="#" target="_blank" style="display: none;">🔗 Google Scholar Profile</a>
+                </div>
             </div>
         </section>
 
@@ -169,7 +170,10 @@
     </div>
 
     <footer>
-        <div class="footer-bottom">
+        <div id="global-footer-address" style="margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; display: none;">
+            <!-- JavaScript will inject the address here -->
+        </div>
+        <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
             <p>&copy; 2026 Research Group. All rights reserved.</p>
         </div>
     </footer>
@@ -197,10 +201,22 @@
 
                 if(data.email) {
                     const emailElement = document.getElementById('pi-email');
-                    emailElement.innerText = data.email;
+                    emailElement.innerText = "✉️ " + data.email;
                     emailElement.href = `mailto:${data.email}`;
                 } else {
                     document.getElementById('pi-email').innerText = "Email not provided";
+                }
+
+                // 2. Update Google Scholar Link 
+                const scholarData = data.google_scholar || data.scholar_link;
+                if(scholarData) {
+                    const scholarElement = document.getElementById('pi-scholar');
+                    if (!scholarData.startsWith('http')) {
+                        scholarElement.href = 'https://' + scholarData;
+                    } else {
+                        scholarElement.href = scholarData;
+                    }
+                    scholarElement.style.display = "inline-flex"; 
                 }
 
                 if(data.photo) {
@@ -208,7 +224,7 @@
                     document.getElementById('pi-photo').src = imgPath;
                 }
 
-                // 2. Update Education List 
+                // 3. Update Education List 
                 if(data.education && data.education.length > 0) {
                     let eduHTML = "";
                     data.education.forEach(item => {
@@ -228,7 +244,7 @@
                     document.getElementById('pi-education').innerHTML = "<li>No education data published yet.</li>";
                 }
 
-                // 3. Update Experience List 
+                // 4. Update Experience List 
                 if(data.experience && data.experience.length > 0) {
                     let expHTML = "";
                     data.experience.forEach(item => {
@@ -247,7 +263,7 @@
                     document.getElementById('pi-experience').innerHTML = "<li>No professional experience published yet.</li>";
                 }
 
-                // 4. Update Awards List 
+                // 5. Update Awards List 
                 if(data.awards && data.awards.length > 0) {
                     let awardsHTML = "";
                     data.awards.forEach(item => {
@@ -269,7 +285,7 @@
             .catch(error => console.log("PI data hasn't been published from the CMS yet.", error));
     </script>
 
-    <!-- Script to fetch the Global Settings (Font, Color, Group Name) -->
+    <!-- Script to fetch the Global Settings (Font, Color, Group Name, Subheading, Logo, Footer) -->
    <script>
         fetch('data/settings.json')
             .then(response => {
@@ -284,7 +300,7 @@
                 if(data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
                 if(data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
 
-                // --- 1. Main Group Name ---
+                // 1. Main Group Name 
                 if(data.group_name) {
                     document.querySelectorAll('.logo').forEach(logo => {
                         logo.innerText = data.group_name;
@@ -304,27 +320,33 @@
                     }
                 }
 
-                // --- 2. NEW: Navigation Subheading Text ---
+                // 2. Smart Navigation Subheading (Partial Link) 
                 if(data.nav_subheading) {
-                    document.querySelectorAll('.subheading-link').forEach(link => {
-                        link.innerText = data.nav_subheading;
+                    document.querySelectorAll('.subheading-wrapper').forEach(wrapper => {
+                        let fullText = data.nav_subheading;
+                        let linkUrl = data.nav_subheading_link || "#";
+                        
+                        if(fullText.includes("LQMI")) {
+                            wrapper.innerHTML = fullText.replace("LQMI", `<a href="${linkUrl}" target="_blank" style="color: #ffffff; text-decoration: underline; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">LQMI</a>`);
+                        } else {
+                            wrapper.innerText = fullText; 
+                        }
                     });
                 }
 
-                // --- 3. NEW: Navigation Subheading Link ---
-                if(data.nav_subheading_link) {
-                    document.querySelectorAll('.subheading-link').forEach(link => {
-                        link.href = data.nav_subheading_link;
-                    });
-                }
-
-                // --- 4. NEW: Header Logo ---
+                // 3. Header Logo 
                 if(data.header_logo) {
                     document.querySelectorAll('#global-nav-logo').forEach(img => {
-                        // Cleans the image path and applies it to the src
                         img.src = data.header_logo.replace(/^\//, '');
-                        // Unhides the image so it appears on the page
                         img.style.display = "block"; 
+                    });
+                } 
+
+                // 4. Footer Office Address 
+                if(data.footer_address) {
+                    document.querySelectorAll('#global-footer-address').forEach(addr => {
+                        addr.innerHTML = "📍 " + data.footer_address.replace(/\n/g, '<br>');
+                        addr.style.display = "block";
                     });
                 }
             })
