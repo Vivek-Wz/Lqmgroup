@@ -140,6 +140,8 @@
                     <a id="pi-email" href="mailto:">✉️ Loading Email...</a>
                     <!-- Scholar Link (Hidden by default) -->
                     <a id="pi-scholar" href="#" target="_blank" style="display: none;">🔗 Google Scholar Profile</a>
+                    <!-- NEW: ORCID Link (Hidden by default) -->
+                    <a id="pi-orcid" href="#" target="_blank" style="display: none;">🆔 ORCID Profile</a>
                 </div>
             </div>
         </section>
@@ -218,7 +220,17 @@
                     }
                     scholarElement.style.display = "inline-flex"; 
                 }
-
+// 3. NEW: Update ORCID Link
+                if(data.orcid) {
+                    const orcidElement = document.getElementById('pi-orcid');
+                    // Ensures the link always opens properly even if you forgot "https://"
+                    if (!data.orcid.startsWith('http')) {
+                        orcidElement.href = 'https://' + data.orcid;
+                    } else {
+                        orcidElement.href = data.orcid;
+                    }
+                    orcidElement.style.display = "inline-flex"; // Makes it visible
+                }
                 if(data.photo) {
                     const imgPath = data.photo.replace(/^\//, '');
                     document.getElementById('pi-photo').src = imgPath;
