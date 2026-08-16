@@ -65,8 +65,13 @@
 
                 let allOppHTML = "";
 
-                data.positions.forEach(pos => {
+               data.positions.forEach(pos => {
                     const badgeColor = pos.status === "Open" ? "green" : "red";
+                    
+                    // NEW: Converts dashboard line breaks into HTML line breaks
+                    const formattedDesc = pos.description ? pos.description.replace(/\r?\n/g, '<br>') : "";
+                    const formattedReq = pos.requirements ? pos.requirements.replace(/\r?\n/g, '<br>') : "";
+                    const formattedApply = pos.apply ? pos.apply.replace(/\r?\n/g, '<br>') : "";
                     
                     allOppHTML += `
                         <div class="card" style="margin-bottom: 20px; padding: 25px; text-align: left; border-radius: 8px;">
@@ -74,10 +79,10 @@
                                 <h3 style="margin: 0; color: #003366; font-size: 1.4rem;">${pos.title}</h3>
                                 <span style="background-color: ${badgeColor}; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: bold;">${pos.status}</span>
                             </div>
-                            <p><strong>Description:</strong> ${pos.description}</p>
-                            <p><strong>Requirements:</strong> ${pos.requirements}</p>
+                            <p><strong>Description:</strong> ${formattedDesc}</p>
+                            <p><strong>Requirements:</strong> ${formattedReq}</p>
                             <div style="margin-top: 20px; padding: 15px; background-color: #f4f4f9; border-left: 4px solid #003366; border-radius: 4px;">
-                                <p style="margin: 0; font-style: italic;"><strong>How to Apply:</strong> ${pos.apply}</p>
+                                <p style="margin: 0; font-style: italic;"><strong>How to Apply:</strong> ${formattedApply}</p>
                             </div>
                         </div>
                     `;
