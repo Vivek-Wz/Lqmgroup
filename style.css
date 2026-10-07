@@ -226,7 +226,7 @@ nav ul li a:hover {
     position: relative;
     width: min(calc(100% - 40px), 1200px);
     aspect-ratio: 21 / 9;
-    margin: clamp(26px, 6vw, 62px) auto;
+    margin: clamp(14px, 2.2vw, 28px) auto clamp(28px, 5vw, 52px);
     overflow: hidden;
     border: 1px solid rgba(0, 51, 102, 0.12);
     border-radius: var(--radius-lg);
@@ -596,7 +596,7 @@ footer p {
     .slider-container {
         width: calc(100% - 24px);
         aspect-ratio: 4 / 3;
-        margin: 18px auto 28px;
+        margin: 10px auto 28px;
         border-radius: 14px;
     }
 
