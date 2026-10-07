@@ -53,20 +53,27 @@ collections:
               - {label: "Long Technical Details", name: "long_description", widget: "markdown", required: false}
               - {label: "Thumbnail/Modal Image", name: "image", widget: "image", required: false}
 
-      # 4. News & Updates
-      - label: "News & Updates"
-        name: "news"
-        file: "data/news.json"
+      # 4. Activities & Homepage Stories
+      - label: "Activities & Homepage Stories"
+        name: "activities"
+        file: "data/activities.json"
         fields:
-          - label: "News Items"
+          - label: "Activities"
             name: "items"
             widget: "list"
             required: false
+            summary: "{{fields.date}} — {{fields.headline}}"
             fields:
-              - {label: "Date", name: "date", widget: "string", required: false}
-              - {label: "Headline", name: "headline", widget: "string", required: false}
-              - {label: "Description", name: "description", widget: "text", required: false}
+              - {label: "Published on Activities Page", name: "published", widget: "boolean", default: true, required: false, hint: "Turn this off to hide the activity everywhere."}
+              - {label: "Show on Homepage", name: "feature_on_home", widget: "boolean", default: false, required: false, hint: "Turn this on to feature the activity on the homepage."}
+              - {label: "Homepage Position", name: "homepage_order", widget: "number", value_type: "int", min: 1, max: 99, required: false, hint: "Use 1 for first, 2 for second, and so on. The homepage displays up to three selected activities."}
+              - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, required: false}
+              - {label: "Category", name: "category", widget: "select", options: ["Publication", "Conference", "Award", "Group News", "Collaboration", "Outreach", "Laboratory Update"], default: "Group News", required: false}
+              - {label: "Headline", name: "headline", widget: "string"}
+              - {label: "Short Summary", name: "description", widget: "text", required: false, hint: "This appears on the homepage and activities page."}
+              - {label: "Full Details", name: "details", widget: "text", required: false, hint: "Optional longer information shown on the activities page."}
               - {label: "Image", name: "image", widget: "image", required: false}
+              - {label: "Optional External Link", name: "link", widget: "string", required: false}
 
       # 5. Principal Investigator
       - label: "Principal Investigator Page"
