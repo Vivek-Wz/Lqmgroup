@@ -218,19 +218,15 @@
                     return;
                 }
 
-                newsContainer.innerHTML = items.map((item, index) => {
+                newsContainer.innerHTML = items.map((item) => {
                     const imgPath = item.image ? item.image.replace(/^\//, '') : 'placeholder-news1.jpg';
-                    const isFeatured = index === 0;
-                    const featuredClass = isFeatured ? ' news-card--featured' : '';
-                    const latestLabel = isFeatured ? '<span class="news-label">Latest update</span>' : '';
                     const date = item.date ? `<time class="news-date">${item.date}</time>` : '';
                     const description = item.description ? `<p>${item.description}</p>` : '';
 
                     return `
-                        <article class="news-card${featuredClass}">
+                        <article class="news-story">
                             <div class="news-image-wrap">
-                                <img src="${imgPath}" alt="${item.headline || 'Research group update'}" loading="${isFeatured ? 'eager' : 'lazy'}">
-                                ${latestLabel}
+                                <img src="${imgPath}" alt="${item.headline || 'Research group update'}" loading="lazy">
                             </div>
                             <div class="news-content">
                                 ${date}
