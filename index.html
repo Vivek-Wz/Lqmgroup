@@ -211,24 +211,35 @@
             })
             .then(data => {
                 const newsContainer = document.getElementById('dynamic-news');
-                let singleSetHTML = "";
+                const items = Array.isArray(data.items) ? data.items : [];
 
-                data.items.forEach((item) => {
+                if (items.length === 0) {
+                    newsContainer.innerHTML = '<p class="news-empty">No updates have been published yet.</p>';
+                    return;
+                }
+
+                newsContainer.innerHTML = items.map((item, index) => {
                     const imgPath = item.image ? item.image.replace(/^\//, '') : 'placeholder-news1.jpg';
-                    
-                    singleSetHTML += `
-                        <div class="news-card">
-                            <img src="${imgPath}" alt="${item.headline}">
-                            <div class="news-content">
-                                <span class="news-date">${item.date}</span>
-                                <h4>${item.headline}</h4>
-                                <p>${item.description}</p>
-                            </div>
-                        </div>
-                    `;
-                });
+                    const isFeatured = index === 0;
+                    const featuredClass = isFeatured ? ' news-card--featured' : '';
+                    const latestLabel = isFeatured ? '<span class="news-label">Latest update</span>' : '';
+                    const date = item.date ? `<time class="news-date">${item.date}</time>` : '';
+                    const description = item.description ? `<p>${item.description}</p>` : '';
 
-                newsContainer.innerHTML = singleSetHTML + singleSetHTML + singleSetHTML + singleSetHTML;
+                    return `
+                        <article class="news-card${featuredClass}">
+                            <div class="news-image-wrap">
+                                <img src="${imgPath}" alt="${item.headline || 'Research group update'}" loading="${isFeatured ? 'eager' : 'lazy'}">
+                                ${latestLabel}
+                            </div>
+                            <div class="news-content">
+                                ${date}
+                                <h3>${item.headline || 'Research group update'}</h3>
+                                ${description}
+                            </div>
+                        </article>
+                    `;
+                }).join('');
             })
             .catch(error => console.log("News data hasn't been created in the CMS yet.", error));
     </script>
