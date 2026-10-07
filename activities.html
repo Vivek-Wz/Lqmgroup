@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="News, publications, awards, events, and research activities from the QPOD Group.">
+    <title>Activities - QPOD Group</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="activities-page">
+    <nav>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img id="global-nav-logo" src="" alt="Group Logo" style="display: none; max-height: 55px; width: auto; object-fit: contain;">
+            <div class="nav-brand">
+                <a href="index.html" class="logo">Quantum Photonic and Optoelectronic Device Group</a>
+                <a href="https://smce.hbut.edu.cn/lqm/index.htm" target="_blank" rel="noopener" class="subheading-link">Core Research Group at LQMI</a>
+            </div>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pi.html">Principal Investigator</a></li>
+            <li><a href="team.html">Research Group</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="activities.html" aria-current="page">Activities</a></li>
+            <li><a href="facilities.html">Facilities</a></li>
+            <li><a href="opportunities.html">Opportunities</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero activities-hero">
+        <h1>Activities</h1>
+        <p>Explore our latest publications, presentations, awards, collaborations, and group milestones.</p>
+    </section>
+
+    <main class="container activities-container">
+        <div class="activities-toolbar" aria-label="Filter activities">
+            <label class="activity-search">
+                <span>Search activities</span>
+                <input id="activity-search" type="search" placeholder="Search by title or keyword">
+            </label>
+            <label class="activity-filter">
+                <span>Category</span>
+                <select id="activity-category">
+                    <option value="all">All categories</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="activities-summary">
+            <p id="activity-count" aria-live="polite">Loading activities…</p>
+        </div>
+
+        <section id="activities-grid" class="activities-grid" aria-label="Published activities"></section>
+    </main>
+
+    <footer>
+        <div id="global-footer-address" style="margin-bottom: 15px; font-size: 0.95rem; line-height: 1.5; display: none;"></div>
+        <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
+            <p>&copy; 2026 QPOD Group. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const grid = document.getElementById('activities-grid');
+        const count = document.getElementById('activity-count');
+        const searchInput = document.getElementById('activity-search');
+        const categorySelect = document.getElementById('activity-category');
+        let publishedActivities = [];
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            })[character]);
+        }
+
+        function activityId(item, index) {
+            const slug = String(item.headline || 'activity')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$/g, '');
+            return 'activity-' + (slug || index + 1);
+        }
+
+        function dateValue(item) {
+            const timestamp = Date.parse(item.date || '');
+            return Number.isNaN(timestamp) ? 0 : timestamp;
+        }
+
+        function formatDate(value) {
+            if (!value || !String(value).trim()) return '';
+            const parsed = new Date(value + (String(value).length === 10 ? 'T00:00:00Z' : ''));
+            if (Number.isNaN(parsed.getTime())) return escapeHTML(value);
+            return new Intl.DateTimeFormat('en', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'UTC'
+            }).format(parsed);
+        }
+
+        function safeLink(value) {
+            if (!value) return '';
+            try {
+                const url = new URL(value, window.location.href);
+                return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
+            } catch {
+                return '';
+            }
+        }
+
+        function renderActivities() {
+            const query = searchInput.value.trim().toLowerCase();
+            const selectedCategory = categorySelect.value;
+            const filtered = publishedActivities.filter(item => {
+                const haystack = [item.headline, item.description, item.details, item.category]
+                    .join(' ')
+                    .toLowerCase();
+                const matchesSearch = !query || haystack.includes(query);
+                const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            count.textContent = filtered.length === 1
+                ? '1 activity'
+                : filtered.length + ' activities';
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p class="activities-empty">No activities match your filters.</p>';
+                return;
+            }
+
+            grid.innerHTML = filtered.map((item, index) => {
+                const image = item.image ? item.image.replace(/^\//, '') : '';
+                const category = item.category ? `<span class="activity-category-badge">${escapeHTML(item.category)}</span>` : '';
+                const date = item.date ? `<time datetime="${escapeHTML(item.date)}">${formatDate(item.date)}</time>` : '';
+                const summary = item.description ? `<p class="activity-summary-text">${escapeHTML(item.description)}</p>` : '';
+                const details = item.details
+                    ? `<details class="activity-details"><summary>Read full update</summary><div>${escapeHTML(item.details).replace(/\r?\n/g, '<br>')}</div></details>`
+                    : '';
+                const link = safeLink(item.link);
+                const externalLink = link
+                    ? `<a class="activity-link" href="${escapeHTML(link)}" target="_blank" rel="noopener">Visit source <span aria-hidden="true">↗</span></a>`
+                    : '';
+
+                return `
+                    <article class="activity-card" id="${activityId(item, index)}">
+                        <div class="activity-card-image${image ? '' : ' activity-card-image--empty'}">
+                            ${image ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(item.headline || 'Activity image')}" loading="lazy">` : '<span>No image</span>'}
+                        </div>
+                        <div class="activity-card-body">
+                            <div class="activity-meta">${category}${date}</div>
+                            <h2>${escapeHTML(item.headline || 'Research group activity')}</h2>
+                            ${summary}
+                            ${details}
+                            ${externalLink}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        fetch('data/activities.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Activities data not found');
+                return response.json();
+            })
+            .then(data => {
+                publishedActivities = (Array.isArray(data.items) ? data.items : [])
+                    .filter(item => item.published !== false)
+                    .sort((a, b) => dateValue(b) - dateValue(a));
+
+                const categories = [...new Set(
+                    publishedActivities
+                        .map(item => item.category)
+                        .filter(Boolean)
+                )].sort();
+
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categorySelect.appendChild(option);
+                });
+
+                renderActivities();
+
+                if (window.location.hash) {
+                    requestAnimationFrame(() => {
+                        const target = document.querySelector(window.location.hash);
+                        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    });
+                }
+            })
+            .catch(error => {
+                console.log('Activities have not been published yet.', error);
+                count.textContent = 'Activities unavailable';
+                grid.innerHTML = '<p class="activities-empty">Activities are temporarily unavailable.</p>';
+            });
+
+        searchInput.addEventListener('input', renderActivities);
+        categorySelect.addEventListener('change', renderActivities);
+    </script>
+
+    <script>
+        fetch('data/settings.json')
+            .then(response => response.json())
+            .then(data => {
+                const root = document.documentElement;
+                if (data.font_family) root.style.setProperty('--main-font', data.font_family);
+                if (data.text_size) root.style.setProperty('--text-size', data.text_size + 'px');
+                if (data.text_color) root.style.setProperty('--text-color', data.text_color);
+                if (data.header_size) root.style.setProperty('--header-size', data.header_size + 'px');
+                if (data.container_width) root.style.setProperty('--container-width', data.container_width + 'px');
+
+                if (data.group_name) {
+                    document.querySelectorAll('.logo').forEach(logo => {
+                        logo.innerText = data.group_name;
+                    });
+                    document.querySelectorAll('footer .footer-bottom p').forEach(footer => {
+                        footer.innerHTML = `&copy; ${new Date().getFullYear()} ${escapeHTML(data.group_name)}. All rights reserved.`;
+                    });
+                    document.title = 'Activities - ' + data.group_name;
+                }
+
+                if (data.nav_subheading) {
+                    document.querySelectorAll('.subheading-link').forEach(link => {
+                        link.innerText = data.nav_subheading;
+                    });
+                }
+
+                if (data.nav_subheading_link) {
+                    document.querySelectorAll('.subheading-link').forEach(link => {
+                        link.href = data.nav_subheading_link;
+                    });
+                }
+
+                if (data.header_logo) {
+                    document.querySelectorAll('#global-nav-logo').forEach(image => {
+                        image.src = data.header_logo.replace(/^\//, '');
+                        image.style.display = 'block';
+                    });
+                }
+
+                if (data.footer_address) {
+                    const address = document.getElementById('global-footer-address');
+                    address.textContent = '📍 ' + data.footer_address;
+                    address.style.whiteSpace = 'pre-line';
+                    address.style.display = 'block';
+                }
+            })
+            .catch(error => console.log('Global settings not yet published.', error));
+    </script>
+</body>
+</html>
