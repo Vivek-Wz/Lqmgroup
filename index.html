@@ -27,6 +27,7 @@
             <li><a href="pi.html">Principal Investigator</a></li>
             <li><a href="team.html">Research Group</a></li>
             <li><a href="publications.html">Publications</a></li>
+            <li><a href="activities.html">Activities</a></li>
             <li><a href="facilities.html">Facilities</a></li>
             <li><a href="opportunities.html">Opportunities</a></li>
         </ul>
@@ -51,9 +52,12 @@
 
     </div>
 
-    <!-- News & Updates -->
+    <!-- Featured Activities -->
     <div class="news-scroller">
-        <h2 class="section-header" id="news">News & Updates</h2>
+        <div class="news-heading-row">
+            <h2 class="section-header" id="news">Featured Activities</h2>
+            <a class="view-all-activities" href="activities.html">View all activities <span aria-hidden="true">→</span></a>
+        </div>
         <div class="news-track" id="dynamic-news"></div>
     </div>
 
@@ -202,42 +206,96 @@
         }
     </script>
 
-    <!-- 3. News Script -->
+    <!-- 3. Featured Activities Script -->
     <script>
-        fetch('data/news.json')
+        function escapeActivityHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            })[character]);
+        }
+
+        function activityAnchor(item, index) {
+            const slug = String(item.headline || 'activity')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$/g, '');
+            return 'activity-' + (slug || index + 1);
+        }
+
+        function activityDateValue(item) {
+            const timestamp = Date.parse(item.date || '');
+            return Number.isNaN(timestamp) ? 0 : timestamp;
+        }
+
+        function formatActivityDate(value) {
+            if (!value || !String(value).trim()) return '';
+            const parsed = new Date(value + (String(value).length === 10 ? 'T00:00:00Z' : ''));
+            if (Number.isNaN(parsed.getTime())) return escapeActivityHTML(value);
+            return new Intl.DateTimeFormat('en', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'UTC'
+            }).format(parsed);
+        }
+
+        fetch('data/activities.json')
             .then(response => {
-                if (!response.ok) throw new Error("News data not found");
+                if (!response.ok) throw new Error("Activities data not found");
                 return response.json();
             })
             .then(data => {
                 const newsContainer = document.getElementById('dynamic-news');
-                const items = Array.isArray(data.items) ? data.items : [];
+                const published = (Array.isArray(data.items) ? data.items : [])
+                    .filter(item => item.published !== false);
+                const selected = published
+                    .filter(item => item.feature_on_home === true)
+                    .sort((a, b) => {
+                        const aOrder = Number.isFinite(Number(a.homepage_order)) ? Number(a.homepage_order) : 999;
+                        const bOrder = Number.isFinite(Number(b.homepage_order)) ? Number(b.homepage_order) : 999;
+                        return aOrder - bOrder || activityDateValue(b) - activityDateValue(a);
+                    });
+                const activities = (selected.length > 0
+                    ? selected
+                    : [...published].sort((a, b) => activityDateValue(b) - activityDateValue(a))
+                ).slice(0, 3);
 
-                if (items.length === 0) {
-                    newsContainer.innerHTML = '<p class="news-empty">No updates have been published yet.</p>';
+                if (activities.length === 0) {
+                    newsContainer.innerHTML = '<p class="news-empty">No featured activities have been published yet.</p>';
                     return;
                 }
 
-                newsContainer.innerHTML = items.map((item) => {
+                newsContainer.innerHTML = activities.map((item, index) => {
                     const imgPath = item.image ? item.image.replace(/^\//, '') : 'placeholder-news1.jpg';
-                    const date = item.date ? `<time class="news-date">${item.date}</time>` : '';
-                    const description = item.description ? `<p>${item.description}</p>` : '';
+                    const anchor = activityAnchor(item, published.indexOf(item));
+                    const activityURL = 'activities.html#' + anchor;
+                    const date = item.date ? `<time class="news-date" datetime="${escapeActivityHTML(item.date)}">${formatActivityDate(item.date)}</time>` : '';
+                    const category = item.category ? `<span class="news-category">${escapeActivityHTML(item.category)}</span>` : '';
+                    const description = item.description ? `<p>${escapeActivityHTML(item.description)}</p>` : '';
 
                     return `
                         <article class="news-story">
-                            <div class="news-image-wrap">
-                                <img src="${imgPath}" alt="${item.headline || 'Research group update'}" loading="lazy">
-                            </div>
+                            <a class="news-image-wrap" href="${activityURL}" aria-label="Read ${escapeActivityHTML(item.headline || 'activity')}">
+                                <img src="${escapeActivityHTML(imgPath)}" alt="${escapeActivityHTML(item.headline || 'Research group activity')}" loading="${index === 0 ? 'eager' : 'lazy'}">
+                            </a>
                             <div class="news-content">
-                                ${date}
-                                <h3>${item.headline || 'Research group update'}</h3>
+                                <div class="news-meta">${category}${date}</div>
+                                <h3><a href="${activityURL}">${escapeActivityHTML(item.headline || 'Research group activity')}</a></h3>
                                 ${description}
+                                <a class="news-read-more" href="${activityURL}">Read full update <span aria-hidden="true">→</span></a>
                             </div>
                         </article>
                     `;
                 }).join('');
             })
-            .catch(error => console.log("News data hasn't been created in the CMS yet.", error));
+            .catch(error => {
+                console.log("Activities have not been published yet.", error);
+                document.getElementById('dynamic-news').innerHTML = '<p class="news-empty">Featured activities are temporarily unavailable.</p>';
+            });
     </script>
 
     <!-- 4. Global Settings Script -->
