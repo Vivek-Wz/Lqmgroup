@@ -224,14 +224,15 @@ nav ul li a:hover {
 /* Homepage slider */
 .slider-container {
     position: relative;
-    width: min(calc(100% - 40px), 1200px);
+    width: 100%;
+    max-width: none;
     aspect-ratio: 21 / 9;
-    margin: clamp(14px, 2.2vw, 28px) auto clamp(28px, 5vw, 52px);
+    margin: 0 0 clamp(28px, 5vw, 52px);
     overflow: hidden;
-    border: 1px solid rgba(0, 51, 102, 0.12);
-    border-radius: var(--radius-lg);
+    border: 0;
+    border-radius: 0;
     background: #06111c;
-    box-shadow: var(--shadow-lg);
+    box-shadow: none;
 }
 
 #dynamic-slider,
@@ -256,7 +257,7 @@ nav ul li a:hover {
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
 }
 
@@ -594,10 +595,10 @@ footer p {
     }
 
     .slider-container {
-        width: calc(100% - 24px);
+        width: 100%;
         aspect-ratio: 4 / 3;
-        margin: 10px auto 28px;
-        border-radius: 14px;
+        margin: 0 0 28px;
+        border-radius: 0;
     }
 
     .slide img {
