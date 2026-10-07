@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "date": "",
+      "category": "Group News",
+      "headline": "Professor Kamal Delivered lecture on Hot Carrier Solar Cells.",
+      "description": "",
+      "details": "",
+      "image": "/images/weixin-image_20260714150923_136_3.jpg",
+      "link": "",
+      "published": true,
+      "feature_on_home": true,
+      "homepage_order": 1
+    },
+    {
+      "date": "",
+      "category": "Publication",
+      "headline": "Prof.Kamal and Dr.Asok has authored chapters in book 2D Van der Waals layered semiconductors",
+      "description": "",
+      "details": "",
+      "image": "/images/screenshot-2026-07-14-162338.png",
+      "link": "",
+      "published": true,
+      "feature_on_home": true,
+      "homepage_order": 2
+    }
+  ]
+}
